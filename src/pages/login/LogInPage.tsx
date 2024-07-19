@@ -1,13 +1,14 @@
-import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
+
+import { Button } from '@/components/ui/button'
 
 function LogInComp() {
   return (
     <section>
       <img
-        src={'/src/assets/images/logos/logo-logout.png'}
-        alt='logout'
-        className='w-32'
+        src={'/src/assets/images/logos/logins.png'}
+        alt='login'
+        className='w-auto h-32 '
       />
       <Link to='/'>
         <Button

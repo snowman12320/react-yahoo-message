@@ -1,13 +1,15 @@
-import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
+
+import { Button } from '@/components/ui/button'
+import { LoginForm } from '@/components/ui/LoginForm'
 
 function LogOutComp() {
   return (
-    <section>
+    <section className='w-56'>
       <img
-        src={'/src/assets/images/logos/logo-logout.png'}
+        src={'/src/assets/images/logos/logout.png'}
         alt='logout'
-        className='w-32'
+        className='w-auto h-32 m-auto'
       />
       <Link to='/login/LogInPage'>
         <Button
@@ -18,6 +20,8 @@ function LogOutComp() {
           LogInPage
         </Button>
       </Link>
+
+      <LoginForm />
     </section>
   )
 }
