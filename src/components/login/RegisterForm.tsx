@@ -163,7 +163,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <Link to='/login/LogInPage'>已經有Yahoo!奇摩帳號了...</Link>
+          <Link to='/'>已經有Yahoo!奇摩帳號了...</Link>
         </div>
       </form>
     </Form>

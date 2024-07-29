@@ -18,7 +18,7 @@ function App() {
     <main className='flex flex-col items-center justify-center h-screen'>
       <Routes>
         <Route
-          path='/login/LogInPage'
+          path='/'
           element={<LogInPage />}
         />
 
