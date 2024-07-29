@@ -1,6 +1,6 @@
-import { LoginForm } from '@/components/login/LoginForm'
+import { RegisterForm } from '@/components/login/RegisterForm'
 
-function LogInPage() {
+function RegisterPage() {
   return (
     <section className='w-56'>
       <img
@@ -9,9 +9,9 @@ function LogInPage() {
         className='w-auto h-32 m-auto'
       />
 
-      <LoginForm />
+      <RegisterForm />
     </section>
   )
 }
 
-export default LogInPage
+export default RegisterPage
