@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { LoginFormValues } from '@/types/login'
-import { setCurrentUser } from '@/features/userSlice';
+import { setCurrentUser } from '@/features/userSlice'
 
 const formSchema = z.object({
   email: z.string().email({ message: '信箱格式不正確' }),
@@ -28,7 +28,7 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const navigate = useNavigate()
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -58,13 +58,13 @@ export function LoginForm() {
 
     // 將本地存儲中的密碼進行解密
     const decryptedPassword = CryptoJS.AES.decrypt(
-    existingUser.password,
+      existingUser.password,
       'secret key 123',
     ).toString(CryptoJS.enc.Utf8)
 
     // 將使用者輸入的密碼與解密後的密碼進行比對
     if (values.password === decryptedPassword) {
-      dispatch(setCurrentUser(existingUser));
+      dispatch(setCurrentUser(existingUser))
 
       // 登入成功後，將使用者資料存儲到狀態管理中
       localStorage.setItem('currentUser', JSON.stringify(existingUser))
@@ -87,7 +87,7 @@ export function LoginForm() {
           control={form.control}
           name='email'
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='w-[200px] mx-auto'>
               <FormLabel>登入帳號</FormLabel>
               <FormControl>
                 <Input
@@ -105,7 +105,7 @@ export function LoginForm() {
           control={form.control}
           name='password'
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='w-[200px] mx-auto'>
               <FormLabel>登入密碼</FormLabel>
               <FormControl>
                 <Input
@@ -128,7 +128,7 @@ export function LoginForm() {
           </Button>
         </div>
 
-        <div>
+        <div className='text-center'>
           <Link to='/login/RegisterPage'>申請新的Yahoo!奇摩帳號...</Link>
         </div>
       </form>

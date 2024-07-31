@@ -50,47 +50,47 @@ export function RegisterForm() {
   }
 
   function submitRegister(values: RegisterFormValues) {
-      // 取得本地存儲中的使用者資料
-      const existingUsersData = localStorage.getItem('yahooUsers')
-      let existingUsers = []
-  
-      if (existingUsersData) {
-        existingUsers = JSON.parse(existingUsersData)
-      }
-  
-      // 檢查是否已經註冊過
-      const userExists = existingUsers.some(user => user.email === values.email)
-      if (userExists) {
-        console.log('User already registered with this email:', values.email)
-        alert('此電子郵件已經註冊過，請使用其他電子郵件。')
-        navigate('/login/LogInPage')
-        return
-      }
-  
-      // 加密密碼
-      const encryptedPassword = CryptoJS.AES.encrypt(
-        values.password,
-        'secret key 123',
-      ).toString()
-  
-      // 建立使用者資料物件
-      const newUser = {
-        email: values.email,
-        password: encryptedPassword,
-      }
-  
-      // 將新使用者資料加入陣列
-      existingUsers.push(newUser)
-  
-      // 儲存更新後的使用者資料陣列到本地存儲
-      localStorage.setItem('yahooUsers', JSON.stringify(existingUsers))
-      console.log('yahooUser registered:', newUser)
-  
-      // 重置表單
-      form.reset()
-  
-      // 導向登入頁面
+    // 取得本地存儲中的使用者資料
+    const existingUsersData = localStorage.getItem('yahooUsers')
+    let existingUsers = []
+
+    if (existingUsersData) {
+      existingUsers = JSON.parse(existingUsersData)
+    }
+
+    // 檢查是否已經註冊過
+    const userExists = existingUsers.some(user => user.email === values.email)
+    if (userExists) {
+      console.log('User already registered with this email:', values.email)
+      alert('此電子郵件已經註冊過，請使用其他電子郵件。')
       navigate('/login/LogInPage')
+      return
+    }
+
+    // 加密密碼
+    const encryptedPassword = CryptoJS.AES.encrypt(
+      values.password,
+      'secret key 123',
+    ).toString()
+
+    // 建立使用者資料物件
+    const newUser = {
+      email: values.email,
+      password: encryptedPassword,
+    }
+
+    // 將新使用者資料加入陣列
+    existingUsers.push(newUser)
+
+    // 儲存更新後的使用者資料陣列到本地存儲
+    localStorage.setItem('yahooUsers', JSON.stringify(existingUsers))
+    console.log('yahooUser registered:', newUser)
+
+    // 重置表單
+    form.reset()
+
+    // 導向登入頁面
+    navigate('/login/LogInPage')
   }
 
   return (
@@ -103,7 +103,7 @@ export function RegisterForm() {
           control={form.control}
           name='email'
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='w-[200px] mx-auto'>
               <FormLabel>信箱帳號</FormLabel>
               <FormControl>
                 <Input
@@ -121,7 +121,7 @@ export function RegisterForm() {
           control={form.control}
           name='password'
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='w-[200px] mx-auto'>
               <FormLabel>註冊密碼</FormLabel>
               <FormControl>
                 <Input
@@ -139,7 +139,7 @@ export function RegisterForm() {
           control={form.control}
           name='confirmPassword'
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='w-[200px] mx-auto'>
               <FormLabel>確認密碼</FormLabel>
               <FormControl>
                 <Input
@@ -162,7 +162,7 @@ export function RegisterForm() {
           </Button>
         </div>
 
-        <div>
+        <div className='text-center'>
           <Link to='/'>已經有Yahoo!奇摩帳號了...</Link>
         </div>
       </form>

@@ -2,7 +2,7 @@ import { LoginForm } from '@/components/login/LoginForm'
 
 function LogInPage() {
   return (
-    <section className='w-56'>
+    <section className='container'>
       <img
         src={'/src/assets/images/logos/logout.png'}
         alt='logout'
