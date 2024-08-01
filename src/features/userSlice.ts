@@ -15,9 +15,11 @@ const userSlice = createSlice({
   reducers: {
     setCurrentUser: (state, action: PayloadAction<LoginFormValues>) => {
       state.currentUser = action.payload;
+      localStorage.setItem('currentUser', JSON.stringify(action.payload));
     },
     clearCurrentUser: (state) => {
       state.currentUser = null;
+      localStorage.removeItem('currentUser');
     },
   },
 });
