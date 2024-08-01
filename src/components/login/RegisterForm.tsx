@@ -59,11 +59,13 @@ export function RegisterForm() {
     }
 
     // 檢查是否已經註冊過
-    const userExists = existingUsers.some(user => user.email === values.email)
+    const userExists = existingUsers.some(
+      (user: RegisterFormValues) => user.email === values.email,
+    )
     if (userExists) {
       console.log('User already registered with this email:', values.email)
       alert('此電子郵件已經註冊過，請使用其他電子郵件。')
-      navigate('/login/LogInPage')
+      navigate('/')
       return
     }
 
@@ -84,13 +86,12 @@ export function RegisterForm() {
 
     // 儲存更新後的使用者資料陣列到本地存儲
     localStorage.setItem('yahooUsers', JSON.stringify(existingUsers))
-    console.log('yahooUser registered:', newUser)
 
     // 重置表單
     form.reset()
 
     // 導向登入頁面
-    navigate('/login/LogInPage')
+    navigate('/')
   }
 
   return (

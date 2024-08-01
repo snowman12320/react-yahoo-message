@@ -8,9 +8,6 @@ export function useLogout() {
 
   return () => {
     dispatch(clearCurrentUser());
-
-    localStorage.removeItem('currentUser');
-
     navigate('/');
   };
 }

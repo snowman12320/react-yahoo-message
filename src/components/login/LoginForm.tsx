@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { LoginFormValues } from '@/types/login'
+import { LoginFormValues } from '@/components/login/types/form.type'
 import { setCurrentUser } from '@/features/userSlice'
 
 const formSchema = z.object({
@@ -48,7 +48,9 @@ export function LoginForm() {
     }
 
     // 查找是否存在匹配的使用者
-    const existingUser = existingUsers.find(user => user.email === values.email)
+    const existingUser = existingUsers.find(
+      (user: LoginFormValues) => user.email === values.email,
+    )
 
     // 如果使用者不存在，則提示用戶註冊
     if (!existingUser) {
@@ -65,9 +67,6 @@ export function LoginForm() {
     // 將使用者輸入的密碼與解密後的密碼進行比對
     if (values.password === decryptedPassword) {
       dispatch(setCurrentUser(existingUser))
-
-      // 登入成功後，將使用者資料存儲到狀態管理中
-      localStorage.setItem('currentUser', JSON.stringify(existingUser))
 
       navigate('/optionList/')
 
