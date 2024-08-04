@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -19,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { LoginFormValues } from '@/components/login/types/form.type'
 import { setCurrentUser } from '@/features/userSlice'
+import { setLoading } from '@/features/loadingSlice'
 
 const formSchema = z.object({
   email: z.string().email({ message: '信箱格式不正確' }),
@@ -38,11 +38,9 @@ export function LoginForm() {
       password: 'a11111111',
     },
   })
-  
-  const [loading, setLoading] = useState(false)
 
   const submitLogin = async (values: LoginFormValues) => {
-    setLoading(true)
+    dispatch(setLoading(true))
     try {
       const response = await axios.post(
         'https://one04social-back-end.onrender.com/api/test/v1/user/login',
@@ -53,12 +51,12 @@ export function LoginForm() {
       )
 
       await dispatch(setCurrentUser(response.data.data))
-      navigate('/optionList/')
     } catch (err) {
       console.error('Login failed:', err)
       alert('登入失敗')
     } finally {
-      setLoading(false)
+      dispatch(setLoading(false))
+      navigate('/optionList/')
     }
   }
 

@@ -1,15 +1,20 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/app/store'
 
-import LogInPage from './pages/login/LogInPage'
-import RegisterPage from './pages/login/RegisterPage'
-import { OptionList } from './pages/optionList/'
+import LogInPage from '@/pages/login/LogInPage'
+import RegisterPage from '@/pages/login/RegisterPage'
+import { OptionList } from '@/pages/optionList/'
+import { Loader2 } from '@/components/'
 
 const setWindowWidth = () => {
   window.innerWidth = 330
 }
 
 function App() {
+  const isLoading = useSelector((state: RootState) => state.loading.isLoading)
+
   useEffect(() => {
     setWindowWidth()
   }, [])
@@ -33,7 +38,15 @@ function App() {
         </div>
       </nav>
 
-      <main className='flex flex-col items-center justify-center window-body bg-white'>
+      <main className='flex flex-col items-center justify-start window-body bg-white relative h-[95vh]'>
+        {isLoading && (
+          <section className='absolute inset-0 backdrop-blur-lg'>
+            <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+              <Loader2 className='mr-2 size-5 animate-spin ' />
+            </div>
+          </section>
+        )}
+
         <Routes>
           <Route
             path='/'

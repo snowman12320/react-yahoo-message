@@ -1,3 +1,5 @@
+export * from 'lucide-react';
+
 export * from './login/LoginForm';
 export * from './login/RegisterForm';
 
