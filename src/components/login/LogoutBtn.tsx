@@ -12,17 +12,19 @@ export function LogoutBtn({ buttonText, className }: LogoutBtnProps) {
   const logout = useLogout()
 
   return (
-    <Button
-      onClick={logout}
-      className={cn(
-        className,
-        'flex bg-transparent p-0 hover:bg-transparent',
-        buttonText !== '' && 'space-x-3',
-      )}
-      type='submit'
-    >
-      <span>{buttonText}</span>
-      <LogOut />
-    </Button>
+    <div className='yahoo-btn-cls'>
+      <Button
+        onClick={logout}
+        className={cn(
+          className,
+          'flex bg-transparent p-0 hover:bg-transparent',
+          buttonText !== '' && 'space-x-3',
+        )}
+        type='submit'
+      >
+        <span>{buttonText}</span>
+        <LogOut />
+      </Button>
+    </div>
   )
 }

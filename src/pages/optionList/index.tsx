@@ -29,13 +29,13 @@ export function OptionList() {
   }, [])
 
   return (
-    <div className=' container bg-gray-100'>
+    <div className='container space-y-3'>
       {/* 頭像區 */}
       <section className='flex gap-6 py-3 justify-between'>
         <div className='flex-none size-32  grid place-content-center border overflow-hidden'>
           {showImage ? (
             <img
-              src='https://firebasestorage.googleapis.com/v0/b/social-e030c.appspot.com/o/about%2FIMG_5026.jpg?alt=media&token=126ed273-0959-44d8-879e-8647c06d335c'
+              src={currentUser?.profile.photo}
               alt='user avatar'
               className='size-full object-cover'
             />
@@ -45,22 +45,24 @@ export function OptionList() {
         </div>
 
         <div className='flex flex-col gap-3 justify-around w-full'>
-          <div className='flex items-center gap-3 justify-around flex-1'>
+          <div className='flex items-center gap-3 justify-around flex-1 '>
             <span className='inline-block size-4 rounded-full bg-black '></span>
             <p>
               {currentUser ? (
-                <p>{currentUser.email.split('@')[0]}</p>
+                <p>{currentUser.profile.name}</p>
               ) : (
                 <p>No user logged in</p>
               )}
             </p>
-            <StatusGroup />
+            <div className='yahoo-btn-cls'>
+              <StatusGroup />
+            </div>
           </div>
 
           <Input
             type='text'
             placeholder='你在做什麼？'
-            className='rounded-md'
+            className='rounded-md inline-block'
           />
 
           <div className='flex gap-3 justify-between items-center'>

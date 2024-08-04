@@ -1,11 +1,12 @@
-import { RegisterForm } from '@/components/login/RegisterForm'
+import { RegisterForm } from '@/components'
+import logout from '@/assets/images/logos/logout.png'
 
 function RegisterPage() {
   return (
-    <section className='container grid place-items-center'>
+    <section className='grid place-items-center h-[95vh]'>
       <div>
         <img
-          src={'/src/assets/images/logos/logout.png'}
+          src={logout}
           alt='logout'
           className='w-auto h-32 m-auto'
         />

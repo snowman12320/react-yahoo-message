@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import CryptoJS from 'crypto-js'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -33,48 +34,35 @@ export function LoginForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'william01@gmail.com',
+      password: 'a11111111',
     },
   })
+  
+  const [loading, setLoading] = useState(false)
 
-  function submitLogin(values: LoginFormValues) {
-    // 取得本地存儲中的使用者資料
-    const existingUsersData = localStorage.getItem('yahooUsers')
-    let existingUsers = []
+  const submitLogin = async (values: LoginFormValues) => {
+    setLoading(true)
+    try {
+      const response = await axios.post(
+        'https://one04social-back-end.onrender.com/api/test/v1/user/login',
+        {
+          email: values.email,
+          password: values.password,
+        },
+      )
 
-    if (existingUsersData) {
-      existingUsers = JSON.parse(existingUsersData)
-    }
-
-    // 查找是否存在匹配的使用者
-    const existingUser = existingUsers.find(
-      (user: LoginFormValues) => user.email === values.email,
-    )
-
-    // 如果使用者不存在，則提示用戶註冊
-    if (!existingUser) {
-      alert('該用戶不存在，請先註冊')
-      return
-    }
-
-    // 將本地存儲中的密碼進行解密
-    const decryptedPassword = CryptoJS.AES.decrypt(
-      existingUser.password,
-      'secret key 123',
-    ).toString(CryptoJS.enc.Utf8)
-
-    // 將使用者輸入的密碼與解密後的密碼進行比對
-    if (values.password === decryptedPassword) {
-      dispatch(setCurrentUser(existingUser))
-
+      await dispatch(setCurrentUser(response.data.data))
       navigate('/optionList/')
-
-      // alert('登入成功')
-    } else {
+    } catch (err) {
+      console.error('Login failed:', err)
       alert('登入失敗')
+    } finally {
+      setLoading(false)
     }
   }
+
+  // https://one04social-back-end.onrender.com/api/test/v1/user/login
 
   return (
     <Form {...form}>
@@ -118,9 +106,9 @@ export function LoginForm() {
           )}
         />
 
-        <div className='text-center'>
+        <div className='text-center win7'>
           <Button
-            className='w-[100px]'
+            className='button'
             type='submit'
           >
             登入

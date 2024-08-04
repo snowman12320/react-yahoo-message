@@ -1,20 +1,21 @@
-import { useForm } from 'react-hook-form'
-import { useNavigate, Link } from 'react-router-dom'
+import { useForm } from '@/utils/form'
+import { useNavigate, Link } from '@/utils/router'
+import { useLocalStorage } from '@/utils/use'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import CryptoJS from 'crypto-js'
 
-import { Button } from '@/components/ui/button'
 import {
+  Button,
+  Input,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+} from '@/components/'
 
 const formSchema = z
   .object({
@@ -33,6 +34,7 @@ const formSchema = z
 
 export function RegisterForm() {
   const navigate = useNavigate()
+  const [yahooUsers, setyahooUsers] = useLocalStorage('yahooUsers', [])
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -51,11 +53,13 @@ export function RegisterForm() {
 
   function submitRegister(values: RegisterFormValues) {
     // 取得本地存儲中的使用者資料
-    const existingUsersData = localStorage.getItem('yahooUsers')
-    let existingUsers = []
+    // const existingUsersData = localStorage.getItem('yahooUsers')
+    const existingUsersData = yahooUsers
+    let existingUsers = [] as RegisterFormValues[]
 
     if (existingUsersData) {
-      existingUsers = JSON.parse(existingUsersData)
+      // existingUsers = JSON.parse(existingUsersData)
+      existingUsers = existingUsersData
     }
 
     // 檢查是否已經註冊過
@@ -79,13 +83,15 @@ export function RegisterForm() {
     const newUser = {
       email: values.email,
       password: encryptedPassword,
+      confirmPassword: encryptedPassword,
     }
 
     // 將新使用者資料加入陣列
     existingUsers.push(newUser)
 
     // 儲存更新後的使用者資料陣列到本地存儲
-    localStorage.setItem('yahooUsers', JSON.stringify(existingUsers))
+    // localStorage.setItem('yahooUsers', JSON.stringify(existingUsers))
+    setyahooUsers(existingUsers as never)
 
     // 重置表單
     form.reset()

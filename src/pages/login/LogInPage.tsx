@@ -1,11 +1,13 @@
-import { LoginForm } from '@/components/login/LoginForm'
+import { LoginForm } from '@/components'
+
+import logout from '@/assets/images/logos/logout.png'
 
 function LogInPage() {
   return (
-    <section className='container grid place-items-center'>
+    <section className='h-[95vh] grid place-items-center'>
       <div>
         <img
-          src={'/src/assets/images/logos/logout.png'}
+          src={logout}
           alt='logout'
           className='w-auto h-32 m-auto'
         />
