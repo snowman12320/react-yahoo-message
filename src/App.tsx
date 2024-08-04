@@ -15,24 +15,41 @@ function App() {
   }, [])
 
   return (
-    <main className='flex flex-col items-center justify-center h-screen'>
-      <Routes>
-        <Route
-          path='/'
-          element={<LogInPage />}
-        />
+    <div className='rounded-xl  overflow-hidden container  px-0 window !bg-white h-screen'>
+      <nav className='title-bar !p-4'>
+        <div className='title-bar-text flex items-center gap-1'>
+          <img
+            src='/src/assets/images/logos/logins.png'
+            className='size-6 object-contain'
+            alt='logo'
+          />
+          <p className='text-white'>Yahoo！即時通</p>
+        </div>
 
-        <Route
-          path='/login/RegisterPage'
-          element={<RegisterPage />}
-        />
+        <div className='title-bar-controls'>
+          <button aria-label='Minimize'></button>
+          <button aria-label='Restore'></button>
+          <button aria-label='Close'></button>
+        </div>
+      </nav>
 
-        <Route
-          path='/optionList/'
-          element={<OptionList />}
-        />
-      </Routes>
-    </main>
+      <main className='flex flex-col items-center justify-center window-body bg-white'>
+        <Routes>
+          <Route
+            path='/'
+            element={<LogInPage />}
+          />
+          <Route
+            path='/login/RegisterPage'
+            element={<RegisterPage />}
+          />
+          <Route
+            path='/optionList/'
+            element={<OptionList />}
+          />
+        </Routes>
+      </main>
+    </div>
   )
 }
 
