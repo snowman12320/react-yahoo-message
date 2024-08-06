@@ -16,9 +16,10 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { LoginFormValues } from '@/components/login/types/form.type'
+import { LoginFormValues } from '@/types'
 import { setCurrentUser } from '@/features/userSlice'
 import { setLoading } from '@/features/loadingSlice'
+import { login } from '@/api'
 
 const formSchema = z.object({
   email: z.string().email({ message: '信箱格式不正確' }),
@@ -42,25 +43,20 @@ export function LoginForm() {
   const submitLogin = async (values: LoginFormValues) => {
     dispatch(setLoading(true))
     try {
-      const response = await axios.post(
-        'https://one04social-back-end.onrender.com/api/test/v1/user/login',
-        {
-          email: values.email,
-          password: values.password,
-        },
-      )
+      const response = await login({
+        email: values.email,
+        password: values.password,
+      })
 
-      await dispatch(setCurrentUser(response.data.data))
+      await dispatch(setCurrentUser(response.data))
+      navigate('/optionList/')
     } catch (err) {
       console.error('Login failed:', err)
       alert('登入失敗')
     } finally {
       dispatch(setLoading(false))
-      navigate('/optionList/')
     }
   }
-
-  // https://one04social-back-end.onrender.com/api/test/v1/user/login
 
   return (
     <Form {...form}>
