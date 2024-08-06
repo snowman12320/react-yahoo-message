@@ -6,8 +6,6 @@ export type Profile = {
 }
 
 export type User = {
-  data: {
     profile: Profile;
     token: string;
-  }
 }

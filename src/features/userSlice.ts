@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '@/types'
+import { Profile } from '@/types'
 
 interface UserState {
-  currentUser: User | null;
+  currentUser: Profile | null;
 }
 
 const initialState: UserState = {
@@ -13,7 +13,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setCurrentUser: (state, action: PayloadAction<User>) => {
+    setCurrentUser: (state, action: PayloadAction<Profile>) => {
       state.currentUser = action.payload;
       localStorage.setItem('currentUser', JSON.stringify(action.payload));
     },

@@ -1,15 +1,24 @@
 import { LogOut } from 'lucide-react'
-
-import { useLogout } from '@/utils/auth'
+import { clearCurrentUser } from '@/features/userSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { removeFromStorage } from '@/api'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 interface LogoutBtnProps {
   buttonText: string
   className?: string
 }
 
 export function LogoutBtn({ buttonText, className }: LogoutBtnProps) {
-  const logout = useLogout()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const logout = () => {
+    dispatch(clearCurrentUser())
+    removeFromStorage('token', 'SESSION')
+    navigate('/')
+  }
 
   return (
     <div className='yahoo-btn-cls'>

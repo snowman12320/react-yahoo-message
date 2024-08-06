@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -48,7 +47,7 @@ export function LoginForm() {
         password: values.password,
       })
 
-      await dispatch(setCurrentUser(response.data))
+      await dispatch(setCurrentUser(response.data.profile))
       navigate('/optionList/')
     } catch (err) {
       console.error('Login failed:', err)

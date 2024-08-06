@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { BadgeProps, badgeVariants } from './types/badgeVariants'
 
 function Badge({ className, variant, ...props }: BadgeProps) {

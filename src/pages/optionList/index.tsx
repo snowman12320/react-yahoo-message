@@ -35,7 +35,7 @@ export function OptionList() {
         <div className='flex-none size-32  grid place-content-center border overflow-hidden'>
           {showImage ? (
             <img
-              src={currentUser?.profile.photo}
+              src={currentUser?.photo}
               alt='user avatar'
               className='size-full object-cover'
             />
@@ -49,7 +49,7 @@ export function OptionList() {
             <span className='inline-block size-4 rounded-full bg-black '></span>
             <p>
               {currentUser ? (
-                <p>{currentUser.profile.name}</p>
+                <p>{currentUser.name}</p>
               ) : (
                 <p>No user logged in</p>
               )}
