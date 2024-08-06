@@ -1,0 +1,40 @@
+.yahoo-btn-cls {
+  button {
+    font-size: 11px;
+    box-sizing: border-box;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 3px;
+
+    &:not(:disabled):hover {
+      box-shadow:
+        inset -1px 1px #fff,
+        inset 1px 2px #fff,
+        inset -2px 2px #fff,
+        inset 2px -2px #fff !important;
+    }
+
+    &:focused {
+      outline: 1px dotted #fff !important;
+      outline-offset: -4px !important;
+      box-shadow:
+        inset -1px 1px #fff,
+        inset 1px 2px #fff,
+        inset -2px 2px #fff,
+        inset 1px -1px #fff,
+        inset 2px -2px #fff !important;
+    }
+
+    &:focus {
+      outline: 1px dotted #fff !important;
+      outline-offset: -4px !important;
+      box-shadow:
+        inset -1px 1px #fff,
+        inset 1px 2px #fff,
+        inset -2px 2px #fff,
+        inset 1px -1px #fff,
+        inset 2px -2px #fff !important;
+    }
+  }
+}

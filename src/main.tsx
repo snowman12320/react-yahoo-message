@@ -7,10 +7,10 @@ import.meta.env
 import App from './App.tsx'
 import { store } from './app/store'
 
+import 'xp.css/dist/XP.css'
 import '@/styles/globals.css'
 import '@/styles/font.css'
-import '@/styles/button.css'
-import 'xp.css/dist/XP.css'
+import '@/index.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
