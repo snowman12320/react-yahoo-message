@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 
-export function useCurrentUser() {
+export default function useCurrentUser() {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   if (currentUser) {

@@ -1,4 +1,4 @@
-import { KEY_TOKEN, storeInStorage, getFromStorage } from "./storage-management.ts";
+import { KEY_TOKEN, storeInStorage, getFromStorage } from './storage-management.ts';
 
 /**
  * API 回應的格式
@@ -13,13 +13,13 @@ export type APIResponseDTO<T> = {
  * 包含 token 屬性的介面
  */
 interface TokenResponse {
-  token: string;
+  token: string | null;
 }
 
 /**
  * HTTP 請求的方法
  */
-export type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /**
  * 發送 HTTP 請求
@@ -34,11 +34,11 @@ export const fetchData = async<T extends TokenResponse = TokenResponse> (
   params?: unknown,
 ) => {
   const headers = new Headers();
-  headers.append("Content-Type", "application/json");
+  headers.append('Content-Type', 'application/json');
 
-  const token = getFromStorage(KEY_TOKEN, "SESSION");
+  const token = getFromStorage(KEY_TOKEN, 'SESSION');
   if (token) {
-    headers.append("Authorization", `Bearer ${token}`);
+    headers.append('Authorization', `Bearer ${token}`);
   }
 
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}${url}`, {
@@ -47,14 +47,14 @@ export const fetchData = async<T extends TokenResponse = TokenResponse> (
     body: params ? JSON.stringify(params) : undefined,
   });
 
-  const data = (await response.json()) as APIResponseDTO<T>;
-  if (data.status !== "success") {
-    throw new Error(data.message);
+  const result = (await response.json()) as APIResponseDTO<T>;
+  if (result.status !== 'success') {
+    throw new Error(result.message);
   }
 
-  if (data.data.token) {
-    storeInStorage(KEY_TOKEN, data.data.token, "SESSION");
+  if (result.data.token) {
+    storeInStorage(KEY_TOKEN, result.data.token, 'SESSION');
   }
 
-  return data 
+  return result;
 };

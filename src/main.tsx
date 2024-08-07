@@ -1,16 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import.meta.env
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import App from './App.tsx'
-import { store } from './app/store'
+import App from './App.tsx';
+import { store } from './app/store';
 
-import 'xp.css/dist/XP.css'
-import '@/styles/globals.css'
-import '@/styles/font.css'
-import '@/index.scss'
+import '@/styles/globals.css';
+import '@/styles/font.css';
+import '@/index.scss';
+
+import 'xp.css/dist/XP.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -20,4 +20,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
-)
+);

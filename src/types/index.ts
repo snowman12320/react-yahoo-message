@@ -1,3 +1,3 @@
-export * from './form.type';
-export * from './base.type';
-export * from './user.type';
+export * from './form.type.ts';
+export * from './base.type.ts';
+export * from './user.type.ts';

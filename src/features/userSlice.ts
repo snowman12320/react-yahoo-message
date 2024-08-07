@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Profile } from '@/types'
+import { Profile } from '@/types';
 
 interface UserState {
   currentUser: Profile | null;
@@ -14,10 +14,12 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action: PayloadAction<Profile>) => {
+      // eslint-disable-next-line no-param-reassign
       state.currentUser = action.payload;
       localStorage.setItem('currentUser', JSON.stringify(action.payload));
     },
     clearCurrentUser: (state) => {
+      // eslint-disable-next-line no-param-reassign
       state.currentUser = null;
       localStorage.removeItem('currentUser');
     },

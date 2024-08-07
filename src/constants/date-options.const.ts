@@ -4,7 +4,7 @@
 export const getYearOptions = (): string[] => {
   const options = [];
   const currentYear = new Date().getFullYear();
-  for (let i = 1911; i <= currentYear; i++) {
+  for (let i = 1911; i <= currentYear; i += 1) {
     options.push(i.toString());
   }
   return options;
@@ -15,7 +15,7 @@ export const getYearOptions = (): string[] => {
  */
 export const getMonthOptions = (): string[] => {
   const options = [];
-  for (let i = 1; i <= 12; i++) {
+  for (let i = 1; i <= 12; i += 1) {
     options.push(i.toString());
   }
   return options;
@@ -29,8 +29,8 @@ export const getMonthOptions = (): string[] => {
  */
 export const getDayOptions = (year: string, month: string): string[] => {
   const options = [];
-  const date = new Date(parseInt(year), parseInt(month), 0);
-  for (let i = 1; i <= date.getDate(); i++) {
+  const date = new Date(parseInt(year, 10), parseInt(month, 10), 0);
+  for (let i = 1; i <= date.getDate(); i += 1) {
     options.push(i.toString());
   }
   return options;

@@ -1,7 +1,7 @@
 /**
  * Token 的 key 值
  */
-export const KEY_TOKEN = "token";
+export const KEY_TOKEN = 'token';
 
 /**
  * 儲存資料到 sessionStorage 或 localStorage
@@ -13,10 +13,10 @@ export const KEY_TOKEN = "token";
 export const storeInStorage = <T = string>(
   key: string,
   value: T,
-  type: "SESSION" | "LOCAL" = "SESSION"
+  type: 'SESSION' | 'LOCAL' = 'SESSION',
 ) => {
   const strValue = JSON.stringify(value);
-  if (type === "SESSION") {
+  if (type === 'SESSION') {
     sessionStorage.setItem(key, strValue);
   } else {
     localStorage.setItem(key, strValue);
@@ -31,12 +31,11 @@ export const storeInStorage = <T = string>(
  */
 export const getFromStorage = <T = string>(
   key: string,
-  type: "SESSION" | "LOCAL" = "SESSION"
+  type: 'SESSION' | 'LOCAL' = 'SESSION',
 ) => {
-  const value =
-    type === "SESSION"
-      ? sessionStorage.getItem(key)
-      : localStorage.getItem(key);
+  const value = type === 'SESSION'
+    ? sessionStorage.getItem(key)
+    : localStorage.getItem(key);
   return value ? (JSON.parse(value) as T) : null;
 };
 
@@ -48,9 +47,9 @@ export const getFromStorage = <T = string>(
  */
 export const removeFromStorage = (
   key: string,
-  type: "SESSION" | "LOCAL" = "SESSION"
+  type: 'SESSION' | 'LOCAL' = 'SESSION',
 ) => {
-  if (type === "SESSION") {
+  if (type === 'SESSION') {
     sessionStorage.removeItem(key);
   } else {
     localStorage.removeItem(key);
@@ -62,8 +61,8 @@ export const removeFromStorage = (
  *
  * @param type 清空哪裡的資料，預設為 SessionStorage
  */
-export const clearStorage = (type: "SESSION" | "LOCAL" = "SESSION") => {
-  if (type === "SESSION") {
+export const clearStorage = (type: 'SESSION' | 'LOCAL' = 'SESSION') => {
+  if (type === 'SESSION') {
     sessionStorage.clear();
   } else {
     localStorage.clear();

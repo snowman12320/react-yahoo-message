@@ -13,6 +13,7 @@ const loadingSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
+      // eslint-disable-next-line no-param-reassign
       state.isLoading = action.payload;
     },
   },

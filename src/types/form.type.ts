@@ -1,6 +1,6 @@
 interface LoginFormValues {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
-export type { LoginFormValues }
+export type { LoginFormValues };
