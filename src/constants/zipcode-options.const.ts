@@ -1,4 +1,4 @@
-import { BaseItem } from '@types';
+import { BaseItem } from '@/types';
 
 /**
  * 縣市的選項

@@ -26,7 +26,7 @@ const formSchema = z
       message: '密碼至少要有6個字元',
     }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: '密碼不一致',
     path: ['confirmPassword'],
   });
@@ -113,6 +113,7 @@ export function RegisterForm() {
               <FormLabel>信箱帳號</FormLabel>
               <FormControl>
                 <Input
+                  className=""
                   type="email"
                   placeholder="example@example.com"
                   {...field}
@@ -131,6 +132,7 @@ export function RegisterForm() {
               <FormLabel>註冊密碼</FormLabel>
               <FormControl>
                 <Input
+                  className=""
                   type="password"
                   placeholder="請輸入密碼"
                   {...field}
@@ -149,6 +151,7 @@ export function RegisterForm() {
               <FormLabel>確認密碼</FormLabel>
               <FormControl>
                 <Input
+                  className=""
                   type="password"
                   placeholder="請再次輸入密碼"
                   {...field}

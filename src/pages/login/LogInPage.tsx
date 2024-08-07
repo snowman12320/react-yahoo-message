@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoginForm } from '@/components';
 
 import logout from '@/assets/images/logos/logout.png';

@@ -26,7 +26,7 @@ export function StatusGroup() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className=" bg-white text-center">
-        <DropdownMenuLabel>狀態設定</DropdownMenuLabel>
+        <DropdownMenuLabel inset={false}>狀態設定</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
           value={position}

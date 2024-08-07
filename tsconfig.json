@@ -31,8 +31,7 @@
   },
   "include": [
     "src",
-    ".vscode/App copy.tsx"
-, ".vscode/CountBtn.tsx", ".vscode/LoginForm copy.tsx"  ],
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

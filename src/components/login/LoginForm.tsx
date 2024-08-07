@@ -71,6 +71,7 @@ export function LoginForm() {
               <FormLabel>登入帳號</FormLabel>
               <FormControl>
                 <Input
+                  className=""
                   type="email"
                   placeholder="example@example.com"
                   {...field}
@@ -89,6 +90,7 @@ export function LoginForm() {
               <FormLabel>登入密碼</FormLabel>
               <FormControl>
                 <Input
+                  className=""
                   type="password"
                   placeholder="請輸入密碼"
                   {...field}
