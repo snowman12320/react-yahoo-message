@@ -51,7 +51,7 @@ export function LoginForm() {
       navigate('/optionList/');
     } catch (err) {
       // console.error('Login failed:', err);
-      alert('登入失敗');
+      // alert('登入失敗');
     } finally {
       dispatch(setLoading(false));
     }

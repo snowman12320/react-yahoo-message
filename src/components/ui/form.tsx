@@ -37,7 +37,7 @@ function FormField<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ ...props }: ControllerProps<TFieldValues, TName>) {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider value={React.useMemo(() => ({ name: props.name }), [props.name])}>
       <Controller {...props} />
     </FormFieldContext.Provider>
   );
@@ -73,7 +73,7 @@ const FormItem = React.forwardRef<
   const id = React.useId();
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext.Provider value={React.useMemo(() => ({ id }), [id])}>
       <div
         ref={ref}
         className={cn('space-y-2', className)}
@@ -87,6 +87,7 @@ FormItem.displayName = 'FormItem';
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 

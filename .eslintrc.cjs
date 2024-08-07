@@ -21,5 +21,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 0,
     'no-console': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };

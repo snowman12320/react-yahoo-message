@@ -32,9 +32,9 @@ function App() {
         </div>
 
         <div className="title-bar-controls">
-          <button aria-label="Minimize" />
-          <button aria-label="Restore" />
-          <button aria-label="Close" />
+          <button type="button" aria-label="Minimize" />
+          <button type="button" aria-label="Restore" />
+          <button type="button" aria-label="Close" />
         </div>
       </nav>
 

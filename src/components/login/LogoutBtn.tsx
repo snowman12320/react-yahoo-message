@@ -8,7 +8,7 @@ import { cn } from '@/lib/cn';
 
 interface LogoutBtnProps {
   buttonText: string;
-  className?: string;
+  className: string;
 }
 
 export function LogoutBtn({ buttonText, className }: LogoutBtnProps) {

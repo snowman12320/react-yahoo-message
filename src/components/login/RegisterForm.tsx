@@ -67,7 +67,7 @@ export function RegisterForm() {
     );
     if (userExists) {
       // console.log('User already registered with this email:', values.email);
-      alert('此電子郵件已經註冊過，請使用其他電子郵件。');
+      // alert('此電子郵件已經註冊過，請使用其他電子郵件。');
       navigate('/');
       return;
     }
