@@ -15,7 +15,7 @@ export const fetchUser = async () => fetchData<User>('GET', '/api/test/v1/user/p
 
 export const loginGuard = async () => {
   const token = getFromStorage(KEY_TOKEN, 'SESSION');
-  if (token) {
+  if (!token) {
     return redirect('/');
   }
   return null;

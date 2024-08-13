@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Mail, Loader2, Plus, Settings,
 } from 'lucide-react';
+
 import useCurrentUser from '@/hooks/useCurrentUser';
 import { LogoutBtn } from '@/components/login/LogoutBtn';
 import { Input } from '@/components/ui/input';
@@ -12,14 +12,6 @@ import ComplexList from '@/components/optionList/ComplexList';
 
 export default function OptionList() {
   const currentUser = useCurrentUser();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!currentUser) {
-      navigate('/');
-    }
-  }, [currentUser, navigate]);
-
   const [showImage, setShowImage] = useState(false);
 
   useEffect(() => {

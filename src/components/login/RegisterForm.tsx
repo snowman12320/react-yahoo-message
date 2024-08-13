@@ -26,7 +26,7 @@ const formSchema = z
       message: '密碼至少要有6個字元',
     }),
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: '密碼不一致',
     path: ['confirmPassword'],
   });

@@ -4,14 +4,14 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    'airbnb', // 新增這一行
-    'airbnb/hooks', // 新增這一行
+    'airbnb',
+    'airbnb/hooks',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['react-refresh'],
   rules: {
-    'react-refresh/only-export-components': 'off',
+    'react-refresh/only-export-components': 0,
     'react/jsx-filename-extension': [
       1,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
