@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import CryptoJS from 'crypto-js';
+import { useDispatch } from 'react-redux';
+
+import useIsLoading from '@/hooks/useIsLoading';
+import { setLoading } from '@/features/loadingSlice';
 import { useForm } from '@/core/form';
 import { useNavigate, Link } from '@/core/router';
-import { useLocalStorage } from '@/core/use';
-
+import { RegisterFormValues } from '@/types/';
 import {
   Button,
   Input,
@@ -14,10 +16,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  RadioGroup,
+  RadioGroupItem,
+  Label,
 } from '@/components/';
+import { register } from '@/api/user.api';
 
 const formSchema = z
   .object({
+    name: z.string().min(2, {
+      message: '用戶名稱至少要有2個字元',
+    }),
+    gender: z.enum(['male', 'female', 'secret'], {
+      required_error: '請選擇性別',
+    }),
     email: z.string().email({ message: '信箱格式不正確' }),
     password: z.string().min(6, {
       message: '密碼至少要有6個字元',
@@ -33,70 +45,34 @@ const formSchema = z
 
 export function RegisterForm() {
   const navigate = useNavigate();
-  const [yahooUsers, setyahooUsers] = useLocalStorage('yahooUsers', []);
+  const dispatch = useDispatch();
+  const isLoading = useIsLoading();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: 'william',
+      gender: 'secret',
+      email: 'yahoo01@yahoo.com.tw',
+      password: 'a11111111',
+      confirmPassword: 'a11111111',
     },
   });
 
-  interface RegisterFormValues {
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }
+  async function submitRegister(values: RegisterFormValues) {
+    try {
+      dispatch(setLoading(true));
+      const response = await register(values);
 
-  function submitRegister(values: RegisterFormValues) {
-    // 取得本地存儲中的使用者資料
-    // const existingUsersData = localStorage.getItem('yahooUsers')
-    const existingUsersData = yahooUsers;
-    let existingUsers = [] as RegisterFormValues[];
-
-    if (existingUsersData) {
-      // existingUsers = JSON.parse(existingUsersData)
-      existingUsers = existingUsersData;
+      if (response.status === 'success') {
+        form.reset();
+        navigate('/');
+      }
+    } catch (error) {
+      // POST https://one04social-back-end.onrender.com/api/test/v1/user/register 400 (Bad Request)
+    } finally {
+      dispatch(setLoading(false));
     }
-
-    // 檢查是否已經註冊過
-    const userExists = existingUsers.some(
-      (user: RegisterFormValues) => user.email === values.email,
-    );
-    if (userExists) {
-      // console.log('User already registered with this email:', values.email);
-      // alert('此電子郵件已經註冊過，請使用其他電子郵件。');
-      navigate('/');
-      return;
-    }
-
-    // 加密密碼
-    const encryptedPassword = CryptoJS.AES.encrypt(
-      values.password,
-      'secret key 123',
-    ).toString();
-
-    // 建立使用者資料物件
-    const newUser = {
-      email: values.email,
-      password: encryptedPassword,
-      confirmPassword: encryptedPassword,
-    };
-
-    // 將新使用者資料加入陣列
-    existingUsers.push(newUser);
-
-    // 儲存更新後的使用者資料陣列到本地存儲
-    // localStorage.setItem('yahooUsers', JSON.stringify(existingUsers))
-    setyahooUsers(existingUsers as never);
-
-    // 重置表單
-    form.reset();
-
-    // 導向登入頁面
-    navigate('/');
   }
 
   return (
@@ -158,6 +134,57 @@ export function RegisterForm() {
                 />
               </FormControl>
               <FormMessage className="text-red-400" />
+            </FormItem>
+          )}
+        />
+
+        {/* 用戶名稱 */}
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="w-[200px] mx-auto">
+              <FormLabel>用戶名稱</FormLabel>
+              <FormControl>
+                <Input
+                  className=""
+                  type="text"
+                  placeholder="請輸入用戶名稱"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-red-400" />
+            </FormItem>
+          )}
+        />
+
+        {/* 性別 */}
+        <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => (
+            <FormItem className="w-[200px] mx-auto">
+              <FormLabel>用戶性別</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className={`flex ${isLoading ? 'hidden' : ''}`}
+                >
+                  <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <RadioGroupItem value="male" id="male" />
+                    <Label htmlFor="male">男</Label>
+                  </div>
+                  <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <RadioGroupItem value="female" id="female" />
+                    <Label htmlFor="female">女</Label>
+                  </div>
+                  <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <RadioGroupItem value="secret" id="secret" />
+                    <Label htmlFor="secret">不透露</Label>
+                  </div>
+                </RadioGroup>
+              </FormControl>
             </FormItem>
           )}
         />

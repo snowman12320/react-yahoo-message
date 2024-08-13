@@ -6,6 +6,7 @@
     background: transparent;
     box-shadow: none;
     border-radius: 3px;
+    min-width: auto;
 
     &:not(:disabled):hover {
       box-shadow:
@@ -35,6 +36,10 @@
         inset -2px 2px #fff,
         inset 1px -1px #fff,
         inset 2px -2px #fff !important;
+    }
+
+    &:not(:disabled):active {
+      background: linear-gradient(180deg, #fff, #fff);
     }
   }
 }

@@ -1,6 +1,6 @@
 import { redirect } from 'react-router-dom';
 import { fetchData } from '@/api';
-import { User } from '@/types';
+import { User, RegisterFormValues } from '@/types';
 import { KEY_TOKEN, getFromStorage } from './storage-management.ts';
 
 export const signup = async (params: User) => fetchData<User>('POST', '/user/signup', params);
@@ -20,3 +20,5 @@ export const loginGuard = async () => {
   }
   return null;
 };
+
+export const register = async (params: RegisterFormValues) => fetchData<User>('POST', '/api/test/v1/user/register', params);

@@ -1,9 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
-
+import useIsLoading from '@/hooks/useIsLoading';
 import { Loader2, NavbarComp } from '@/components/';
 
 const setWindowWidth = () => {
@@ -11,7 +9,7 @@ const setWindowWidth = () => {
 };
 
 function Layout() {
-  const isLoading = useSelector((state: RootState) => state.loading.isLoading);
+  const isLoading = useIsLoading();
 
   useEffect(() => {
     setWindowWidth();
