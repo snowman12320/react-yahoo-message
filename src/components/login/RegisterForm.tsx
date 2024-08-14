@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { useDispatch } from 'react-redux';
 
 import useIsLoading from '@/hooks/useIsLoading';
@@ -21,35 +20,15 @@ import {
   Label,
 } from '@/components/';
 import { register } from '@/api/user.api';
-
-const formSchema = z
-  .object({
-    name: z.string().min(2, {
-      message: '用戶名稱至少要有2個字元',
-    }),
-    gender: z.enum(['male', 'female', 'secret'], {
-      required_error: '請選擇性別',
-    }),
-    email: z.string().email({ message: '信箱格式不正確' }),
-    password: z.string().min(6, {
-      message: '密碼至少要有6個字元',
-    }),
-    confirmPassword: z.string().min(6, {
-      message: '密碼至少要有6個字元',
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: '密碼不一致',
-    path: ['confirmPassword'],
-  });
+import { REGISTRATION_SCHEMA } from '@/constants';
 
 export function RegisterForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
+  const registerForm = useForm({
+    resolver: zodResolver(REGISTRATION_SCHEMA),
     defaultValues: {
       name: 'william',
       gender: 'secret',
@@ -65,7 +44,7 @@ export function RegisterForm() {
       const response = await register(values);
 
       if (response.status === 'success') {
-        form.reset();
+        registerForm.reset();
         navigate('/');
       }
     } catch (error) {
@@ -76,13 +55,13 @@ export function RegisterForm() {
   }
 
   return (
-    <Form {...form}>
+    <Form {...registerForm}>
       <form
-        onSubmit={form.handleSubmit(submitRegister)}
+        onSubmit={registerForm.handleSubmit(submitRegister)}
         className="space-y-8"
       >
         <FormField
-          control={form.control}
+          control={registerForm.control}
           name="email"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">
@@ -101,7 +80,7 @@ export function RegisterForm() {
         />
 
         <FormField
-          control={form.control}
+          control={registerForm.control}
           name="password"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">
@@ -120,7 +99,7 @@ export function RegisterForm() {
         />
 
         <FormField
-          control={form.control}
+          control={registerForm.control}
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">
@@ -140,7 +119,7 @@ export function RegisterForm() {
 
         {/* 用戶名稱 */}
         <FormField
-          control={form.control}
+          control={registerForm.control}
           name="name"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">
@@ -160,7 +139,7 @@ export function RegisterForm() {
 
         {/* 性別 */}
         <FormField
-          control={form.control}
+          control={registerForm.control}
           name="gender"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">

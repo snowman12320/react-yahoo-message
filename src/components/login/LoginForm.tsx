@@ -1,9 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -19,20 +17,14 @@ import { LoginFormValues } from '@/types';
 import { setCurrentUser } from '@/features/userSlice';
 import { setLoading } from '@/features/loadingSlice';
 import { login } from '@/api';
-
-const formSchema = z.object({
-  email: z.string().email({ message: '信箱格式不正確' }),
-  password: z.string().min(6, {
-    message: '密碼至少要有6個字元',
-  }),
-});
+import { LOGIN_SCHEMA } from '@/constants';
 
 export function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
+  const loginForm = useForm({
+    resolver: zodResolver(LOGIN_SCHEMA),
     defaultValues: {
       email: 'william01@gmail.com',
       password: 'a11111111',
@@ -58,13 +50,13 @@ export function LoginForm() {
   };
 
   return (
-    <Form {...form}>
+    <Form {...loginForm}>
       <form
-        onSubmit={form.handleSubmit(submitLogin)}
+        onSubmit={loginForm.handleSubmit(submitLogin)}
         className="space-y-8"
       >
         <FormField
-          control={form.control}
+          control={loginForm.control}
           name="email"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">
@@ -83,7 +75,7 @@ export function LoginForm() {
         />
 
         <FormField
-          control={form.control}
+          control={loginForm.control}
           name="password"
           render={({ field }) => (
             <FormItem className="w-[200px] mx-auto">
