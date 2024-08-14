@@ -10,36 +10,36 @@
 
     &:not(:disabled):hover {
       box-shadow:
-        inset -1px 1px #fff,
-        inset 1px 2px #fff,
-        inset -2px 2px #fff,
-        inset 2px -2px #fff !important;
+        inset -1px 1px transparent,
+        inset 1px 2px transparent,
+        inset -2px 2px transparent,
+        inset 2px -2px transparent !important;
     }
 
     &:focused {
-      outline: 1px dotted #fff !important;
+      outline: 1px dotted transparent !important;
       outline-offset: -4px !important;
       box-shadow:
-        inset -1px 1px #fff,
-        inset 1px 2px #fff,
-        inset -2px 2px #fff,
-        inset 1px -1px #fff,
-        inset 2px -2px #fff !important;
+        inset -1px 1px transparent,
+        inset 1px 2px transparent,
+        inset -2px 2px transparent,
+        inset 1px -1px transparent,
+        inset 2px -2px transparent !important;
     }
 
     &:focus {
-      outline: 1px dotted #fff !important;
+      outline: 1px dotted transparent !important;
       outline-offset: -4px !important;
       box-shadow:
-        inset -1px 1px #fff,
-        inset 1px 2px #fff,
-        inset -2px 2px #fff,
-        inset 1px -1px #fff,
-        inset 2px -2px #fff !important;
+        inset -1px 1px transparent,
+        inset 1px 2px transparent,
+        inset -2px 2px transparent,
+        inset 1px -1px transparent,
+        inset 2px -2px transparent !important;
     }
 
     &:not(:disabled):active {
-      background: linear-gradient(180deg, #fff, #fff);
+      background: linear-gradient(180deg, transparent, transparent);
     }
   }
 }

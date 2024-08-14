@@ -21,11 +21,13 @@ import {
 } from '@/components/';
 import { register } from '@/api/user.api';
 import { REGISTRATION_SCHEMA } from '@/constants';
+import { useToast } from '@/components/ui/use-toast';
 
 export function RegisterForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
+  const { toast } = useToast();
 
   const registerForm = useForm({
     resolver: zodResolver(REGISTRATION_SCHEMA),
@@ -44,11 +46,19 @@ export function RegisterForm() {
       const response = await register(values);
 
       if (response.status === 'success') {
+        await toast({
+          description: '註冊成功',
+          variant: 'success',
+        });
         registerForm.reset();
         navigate('/');
       }
     } catch (error) {
       // POST https://one04social-back-end.onrender.com/api/test/v1/user/register 400 (Bad Request)
+      toast({
+        description: '註冊失敗',
+        variant: 'error',
+      });
     } finally {
       dispatch(setLoading(false));
     }

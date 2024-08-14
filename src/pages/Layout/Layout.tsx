@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import useIsLoading from '@/hooks/useIsLoading';
-import { Loader2, NavbarComp } from '@/components/';
+import { Loader2, NavbarComp, Toaster } from '@/components/';
 
 const setWindowWidth = () => {
   window.innerWidth = 330;
@@ -27,6 +27,7 @@ function Layout() {
             </div>
           </section>
         )}
+        <Toaster />
         <Outlet />
       </main>
     </div>

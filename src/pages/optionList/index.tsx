@@ -9,10 +9,12 @@ import { Input } from '@/components/ui/input';
 import { StatusGroup } from '@/components/optionList/StatusGroup';
 import ComplexList from '@/components/optionList/ComplexList';
 // import { fetchUser } from '@/api';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function OptionList() {
   const currentUser = useCurrentUser();
   const [showImage, setShowImage] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,7 +74,15 @@ export default function OptionList() {
                 absoluteStrokeWidth
               />
               <Mail className="cursor-pointer size-6" />
-              <Settings className="cursor-pointer size-6" />
+              <Settings
+                className="cursor-pointer size-6"
+                onClick={() => {
+                  toast({
+                    description: '功能開發中',
+                    variant: 'info',
+                  });
+                }}
+              />
             </div>
 
             <LogoutBtn

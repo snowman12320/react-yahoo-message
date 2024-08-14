@@ -18,10 +18,12 @@ import { setCurrentUser } from '@/features/userSlice';
 import { setLoading } from '@/features/loadingSlice';
 import { login } from '@/api';
 import { LOGIN_SCHEMA } from '@/constants';
+import { useToast } from '@/components/ui/use-toast';
 
 export function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const loginForm = useForm({
     resolver: zodResolver(LOGIN_SCHEMA),
@@ -39,11 +41,17 @@ export function LoginForm() {
         password: values.password,
       });
 
+      await toast({
+        description: '登入成功',
+        variant: 'success',
+      });
       await dispatch(setCurrentUser(response.data.profile));
       navigate('/optionList/');
     } catch (err) {
-      // console.error('Login failed:', err);
-      // alert('登入失敗');
+      toast({
+        description: '登入失敗',
+        variant: 'error',
+      });
     } finally {
       dispatch(setLoading(false));
     }
