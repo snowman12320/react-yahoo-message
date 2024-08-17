@@ -1,7 +1,7 @@
 /**
  * Token 的 key 值
  */
-export const KEY_TOKEN = 'token';
+export const KEY_TOKEN = 'yahooToken';
 
 /**
  * 儲存資料到 sessionStorage 或 localStorage

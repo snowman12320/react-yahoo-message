@@ -13,10 +13,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { LoginFormValues } from '@/types';
+import { LoginFormValues, Profile } from '@/types';
 import { setCurrentUser } from '@/features/userSlice';
 import { setLoading } from '@/features/loadingSlice';
-import { login } from '@/api';
+import { login, fetchUser } from '@/api';
 import { LOGIN_SCHEMA } from '@/constants';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -36,20 +36,22 @@ export function LoginForm() {
   const submitLogin = async (values: LoginFormValues) => {
     dispatch(setLoading(true));
     try {
-      const response = await login({
+      await login({
         email: values.email,
         password: values.password,
       });
+      const res = await fetchUser();
+      await dispatch(setCurrentUser(res.data as unknown as Profile));
 
       await toast({
         description: '登入成功',
         variant: 'success',
       });
-      await dispatch(setCurrentUser(response.data.profile));
       navigate('/optionList/');
     } catch (err) {
+      console.log(err);
       toast({
-        description: '登入失敗',
+        description: (err as Error).message,
         variant: 'error',
       });
     } finally {

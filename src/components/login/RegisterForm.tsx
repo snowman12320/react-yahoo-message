@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from 'react-redux';
 
-import useIsLoading from '@/hooks/useIsLoading';
+import { useIsLoading } from '@/hooks';
 import { setLoading } from '@/features/loadingSlice';
 import { useForm } from '@/core/form';
 import { useNavigate, Link } from '@/core/router';
@@ -43,22 +43,23 @@ export function RegisterForm() {
   async function submitRegister(values: RegisterFormValues) {
     try {
       dispatch(setLoading(true));
-      const response = await register(values);
+      const res = await register(values);
 
-      if (response.status === 'success') {
+      if (res.status === 'success') {
         await toast({
-          description: '註冊成功',
+          description: res.message,
           variant: 'success',
         });
         registerForm.reset();
         navigate('/');
       }
     } catch (error) {
-      // POST https://one04social-back-end.onrender.com/api/test/v1/user/register 400 (Bad Request)
-      toast({
-        description: '註冊失敗',
-        variant: 'error',
-      });
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: 'error',
+        });
+      }
     } finally {
       dispatch(setLoading(false));
     }

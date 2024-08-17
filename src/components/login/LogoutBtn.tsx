@@ -17,7 +17,7 @@ export function LogoutBtn({ buttonText, className }: LogoutBtnProps) {
 
   const logout = () => {
     dispatch(clearCurrentUser());
-    removeFromStorage('token', 'SESSION');
+    removeFromStorage('yahooToken', 'SESSION');
     navigate('/');
   };
 
