@@ -1,8 +1,11 @@
 export type Profile = {
   _id: string
+  onlineStatus: string
+  messageBoard: string
   name: string
   gender: string
   photo: string
+  createdAt: string
 }
 
 export type User = {

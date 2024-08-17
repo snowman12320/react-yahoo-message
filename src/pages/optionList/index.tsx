@@ -3,12 +3,11 @@ import {
   Mail, Loader2, Settings,
 } from 'lucide-react';
 
-import useCurrentUser from '@/hooks/useCurrentUser';
+import { useCurrentUser } from '@/hooks';
 import { LogoutBtn } from '@/components/login/LogoutBtn';
 import { Input } from '@/components/ui/input';
 import { StatusGroup } from '@/components/optionList/StatusGroup';
 import ComplexList from '@/components/optionList/ComplexList';
-// import { fetchUser } from '@/api';
 import { useToast } from '@/components/ui/use-toast';
 import { AddFriendDialog } from '@/components/';
 
@@ -24,12 +23,6 @@ export default function OptionList() {
 
     return () => clearTimeout(timer);
   }, []);
-
-  // useEffect(() => {
-  //   fetchUser().then((response) => {
-  //     console.log('response', response);
-  //   });
-  // }, []);
 
   return (
     <div className="container space-y-3 relative">
@@ -49,14 +42,14 @@ export default function OptionList() {
 
         <div className="flex flex-col gap-3 justify-around w-full">
           <div className="flex items-center gap-3 justify-around flex-1 ">
-            <span className="inline-block size-4 rounded-full bg-black " />
-            <p>
+            <span className="inline-block size-2 rounded-full bg-black " />
+            <h2 className="text-base font-bold">
               {currentUser ? (
                 <p>{currentUser.name}</p>
               ) : (
                 <p>No user logged in</p>
               )}
-            </p>
+            </h2>
             <div className="yahoo-btn-cls">
               <StatusGroup />
             </div>

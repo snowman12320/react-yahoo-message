@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import useIsLoading from '@/hooks/useIsLoading';
+import { useIsLoading } from '@/hooks';
 import { Loader2, NavbarComp, Toaster } from '@/components/';
 
 const setWindowWidth = () => {

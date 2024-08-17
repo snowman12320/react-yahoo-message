@@ -17,7 +17,7 @@ export default function ComplexList() {
       <AccordionItem value="item-1">
         <AccordionTrigger>好友列表（0）</AccordionTrigger>
         <AccordionContent>
-          <section className="flex gap-6 py-3 justify-between flex-1">
+          <section className="flex gap-6 py-3 justify-between flex-1 px-3">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/social-e030c.appspot.com/o/about%2FIMG_5026.jpg?alt=media&token=126ed273-0959-44d8-879e-8647c06d335c"
               alt="user avatar"
@@ -41,7 +41,7 @@ export default function ComplexList() {
       <AccordionItem value="item-2">
         <AccordionTrigger>邀約列表（0）</AccordionTrigger>
         <AccordionContent>
-          <section className="flex gap-6 py-3 justify-between flex-1">
+          <section className="flex gap-6 py-3 justify-between flex-1 px-3">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/social-e030c.appspot.com/o/about%2FIMG_5026.jpg?alt=media&token=126ed273-0959-44d8-879e-8647c06d335c"
               alt="user avatar"
