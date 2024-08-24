@@ -50,7 +50,7 @@ export function LoginForm() {
       });
       navigate('/optionList/');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       toast({
         description: (err as Error).message,
         variant: 'error',

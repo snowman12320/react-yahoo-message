@@ -23,7 +23,7 @@ export function AddFriendDialog() {
       navigator.clipboard
         .writeText(inviteCodeInput.value)
         .then(() => {
-          console.log('Invite code copied to clipboard');
+          console.info('Invite code copied to clipboard');
           setIsCopied(true); // Update state on successful copy
           setTimeout(() => setIsCopied(false), 2000); // Reset state after 2 seconds
         })

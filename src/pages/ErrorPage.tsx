@@ -12,7 +12,9 @@ function ErrorPage() {
         alt="logo"
         className="size-20 object-contain mx-auto"
       />
-      <h1 className="text-2xl font-bold text-red-500 sm:text-4xl ">404 Not Found</h1>
+      <h1 className="text-2xl  text-red-500 font-bold sm:text-4xl ">
+        404 Not Found
+      </h1>
       <p className="text-sm">
         Sorry, the page you are looking for could not be found.
       </p>
