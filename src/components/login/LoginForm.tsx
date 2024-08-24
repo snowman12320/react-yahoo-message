@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, DevTool } from '@/core/form';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -31,6 +31,7 @@ export function LoginForm() {
       email: 'william01@gmail.com',
       password: 'a11111111',
     },
+    mode: 'onChange',
   });
 
   const submitLogin = async (values: LoginFormValues) => {
@@ -60,62 +61,66 @@ export function LoginForm() {
   };
 
   return (
-    <Form {...loginForm}>
-      <form
-        onSubmit={loginForm.handleSubmit(submitLogin)}
-        className="space-y-8"
-      >
-        <FormField
-          control={loginForm.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="w-[200px] mx-auto">
-              <FormLabel>登入帳號</FormLabel>
-              <FormControl>
-                <Input
-                  className=""
-                  type="email"
-                  placeholder="example@example.com"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-red-400" />
-            </FormItem>
-          )}
-        />
+    <>
+      <Form {...loginForm}>
+        <form
+          onSubmit={loginForm.handleSubmit(submitLogin)}
+          className="space-y-8"
+        >
+          <FormField
+            control={loginForm.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-[200px] mx-auto">
+                <FormLabel>登入帳號</FormLabel>
+                <FormControl>
+                  <Input
+                    className=""
+                    type="email"
+                    placeholder="example@example.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={loginForm.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="w-[200px] mx-auto">
-              <FormLabel>登入密碼</FormLabel>
-              <FormControl>
-                <Input
-                  className=""
-                  type="password"
-                  placeholder="請輸入密碼"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-red-400" />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={loginForm.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-[200px] mx-auto">
+                <FormLabel>登入密碼</FormLabel>
+                <FormControl>
+                  <Input
+                    className=""
+                    type="password"
+                    placeholder="請輸入密碼"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
 
-        <div className="text-center win7">
-          <Button
-            className="button"
-            type="submit"
-          >
-            登入
-          </Button>
-        </div>
+          <div className="text-center win7">
+            <Button
+              className="button"
+              type="submit"
+            >
+              登入
+            </Button>
+          </div>
 
-        <div className="text-center">
-          <Link to="/login/RegisterPage">申請新的Yahoo!奇摩帳號...</Link>
-        </div>
-      </form>
-    </Form>
+          <div className="text-center">
+            <Link to="/login/RegisterPage">申請新的Yahoo!奇摩帳號...</Link>
+          </div>
+        </form>
+      </Form>
+
+      <DevTool control={loginForm.control} />
+    </>
   );
 }
