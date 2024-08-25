@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import liff from '@line/liff';
+import logo from '@/assets/images/logos/logins.png';
 
 export function NavbarComp() {
   let isLoggedIn = false;
@@ -13,7 +14,7 @@ export function NavbarComp() {
     <nav className="title-bar !p-4">
       <div className="title-bar-text flex items-center gap-1">
         <img
-          src="/src/assets/images/logos/logins.png"
+          src={logo}
           className="size-6 object-contain"
           alt="logo"
         />
