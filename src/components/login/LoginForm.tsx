@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import liff from '@line/liff';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -60,6 +62,21 @@ export function LoginForm() {
     }
   };
 
+  const submitLineLogin = async () => {
+    dispatch(setLoading(true));
+    try {
+      await liff.login();
+    } catch (err) {
+      console.error(err);
+      toast({
+        description: (err as Error).message,
+        variant: 'error',
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   return (
     <>
       <Form {...loginForm}>
@@ -111,6 +128,16 @@ export function LoginForm() {
               type="submit"
             >
               登入
+            </Button>
+          </div>
+
+          <div className="text-center win7">
+            <Button
+              className="button"
+              type="submit"
+              onClick={submitLineLogin}
+            >
+              LINE 登入
             </Button>
           </div>
 

@@ -1,4 +1,14 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import liff from '@line/liff';
+
 export function NavbarComp() {
+  let isLoggedIn = false;
+  try {
+    isLoggedIn = liff.isLoggedIn();
+  } catch (e) {
+    console.error(e);
+  }
+
   return (
     <nav className="title-bar !p-4">
       <div className="title-bar-text flex items-center gap-1">
@@ -7,7 +17,10 @@ export function NavbarComp() {
           className="size-6 object-contain"
           alt="logo"
         />
-        <p className="text-white">Yahoo！即時通</p>
+        <p className="text-white flex">
+          Yahoo！即時通
+          {isLoggedIn ? ' (已登入)' : ' (未登入)'}
+        </p>
       </div>
 
       <div className="title-bar-controls">
