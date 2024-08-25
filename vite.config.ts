@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/react-yahoo-message/' : '/',
+  // base: process.env.NODE_ENV === 'production' ? '/react-yahoo-message/' : '/', // use gh-page
   plugins: [react()],
   resolve: {
     alias: {
