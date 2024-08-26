@@ -4,7 +4,10 @@ import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: process.env.NODE_ENV === 'production' ? '/react-yahoo-message/' : '/', // use gh-page
+  // vercel
+  // https://react-yahoo-message-nojs2azmf-snowman12320s-projects.vercel.app/
+  // gh-page
+  // base: process.env.NODE_ENV === 'production' ? '/react-yahoo-message/' : '/',
   plugins: [react()],
   resolve: {
     alias: {
