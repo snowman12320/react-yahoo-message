@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   Mail, Loader2, Settings,
 } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 
 import { useCurrentUser } from '@/hooks';
 import { LogoutBtn } from '@/components/login/LogoutBtn';
@@ -9,26 +10,31 @@ import { Input } from '@/components/ui/input';
 import { StatusGroup } from '@/components/optionList/StatusGroup';
 import ComplexList from '@/components/optionList/ComplexList';
 import { useToast } from '@/components/ui/use-toast';
-import { AddFriendDialog } from '@/components/';
+import { AddFriendDialog, MessageBoard } from '@/components/';
+import { setCurrentUser } from '@/features/userSlice';
+import { fetchUser } from '@/api';
+import { Profile } from '@/types';
 
 export default function OptionList() {
   const currentUser = useCurrentUser();
   const [showImage, setShowImage] = useState(false);
   const { toast } = useToast();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowImage(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+    const fetchData = async () => {
+      const res = await fetchUser();
+      dispatch(setCurrentUser(res.data as unknown as Profile));
+    };
+    fetchData();
+    setShowImage(true);
+  }, [dispatch]);
 
   return (
     <div className="container space-y-3 relative">
       {/* 頭像區 */}
       <section className="flex gap-6 py-3 justify-between">
-        <div className="flex-none size-32  grid place-content-center border overflow-hidden">
+        <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full">
           {showImage ? (
             <img
               src={currentUser?.photo}
@@ -55,11 +61,7 @@ export default function OptionList() {
             </div>
           </div>
 
-          <Input
-            type="text"
-            placeholder="你在做什麼？"
-            className="rounded-md inline-block"
-          />
+          <MessageBoard currentUser={currentUser} />
 
           <div className="flex gap-3 justify-between items-center">
             <div className="flex gap-3 items-center">
