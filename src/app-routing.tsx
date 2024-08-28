@@ -6,7 +6,7 @@ import Layout from '@/pages/Layout/Layout';
 import RegisterPage from '@/pages/login/RegisterPage';
 import OptionList from '@/pages/optionList/';
 
-import { loginGuard } from '@/api';
+import { notLoggedGuard, isLoggedGuard } from '@/api';
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '',
-        // loader: async () => Promise.all([fetchNewsList(), fetchCulinaryList(), fetchRoomList()]),
+        loader: isLoggedGuard,
         element: <LogInPage />,
       },
       {
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'optionList/',
-        loader: loginGuard,
+        loader: notLoggedGuard,
         element: <OptionList />,
       },
       {

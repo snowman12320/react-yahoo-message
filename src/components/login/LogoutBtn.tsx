@@ -1,6 +1,8 @@
 import { LogOut } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import liff from '@line/liff';
+
 import { clearCurrentUser } from '@/features/userSlice';
 import { removeFromStorage } from '@/api';
 import { Button } from '@/components/ui/button';
@@ -16,9 +18,10 @@ export function LogoutBtn({ buttonText, className }: LogoutBtnProps) {
   const navigate = useNavigate();
 
   const logout = () => {
-    dispatch(clearCurrentUser());
-    removeFromStorage('yahooToken', 'SESSION');
     navigate('/');
+    removeFromStorage('yahooToken', 'SESSION');
+    liff.logout();
+    dispatch(clearCurrentUser());
   };
 
   return (

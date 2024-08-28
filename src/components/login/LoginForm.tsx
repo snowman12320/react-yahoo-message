@@ -3,6 +3,7 @@ import liff from '@line/liff';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
 import { useForm, DevTool } from '@/core/form';
 
 import { Button } from '@/components/ui/button';
@@ -15,12 +16,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { LoginFormValues, Profile } from '@/types';
-import { setCurrentUser } from '@/features/userSlice';
+import { LoginFormValues } from '@/types';
 import { setLoading } from '@/features/loadingSlice';
-import { login, fetchUser } from '@/api';
+import { login, lineLogin } from '@/api';
 import { LOGIN_SCHEMA } from '@/constants';
 import { useToast } from '@/components/ui/use-toast';
+import { KEY_TOKEN, storeInStorage } from '@/api/';
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -43,11 +44,9 @@ export function LoginForm() {
         email: values.email,
         password: values.password,
       });
-      const res = await fetchUser();
-      await dispatch(setCurrentUser(res.data as unknown as Profile));
 
       await toast({
-        description: '登入成功',
+        description: '一般登入成功',
         variant: 'success',
       });
       navigate('/optionList/');
@@ -76,6 +75,38 @@ export function LoginForm() {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    const storeLineToken = async () => {
+      const isLoggedIn = await liff.isLoggedIn();
+
+      if (isLoggedIn) {
+        const lineProfile = await liff.getProfile();
+        const {
+          userId, displayName, pictureUrl, statusMessage,
+        } = lineProfile;
+
+        const {
+          data: { token: lineToken },
+        } = await lineLogin({
+          lineUserId: userId,
+          lineDisplayName: displayName,
+          linePictureUrl: pictureUrl,
+          statusMessage,
+        });
+
+        if (lineToken) {
+          storeInStorage(KEY_TOKEN, lineToken, 'SESSION');
+          navigate('/optionList/');
+          toast({
+            description: 'LINE 登入成功',
+            variant: 'success',
+          });
+        }
+      }
+    };
+    storeLineToken();
+  }, [navigate, toast]);
 
   return (
     <>
@@ -134,7 +165,7 @@ export function LoginForm() {
           <div className="text-center win7">
             <Button
               className="button"
-              type="submit"
+              type="button"
               onClick={submitLineLogin}
             >
               LINE 登入

@@ -1,13 +1,23 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import liff from '@line/liff';
+
 import logo from '@/assets/images/logos/logins.png';
+import { KEY_TOKEN, getFromStorage } from '@/api';
 
 export function NavbarComp() {
   let isLoggedIn = false;
-  try {
-    isLoggedIn = liff.isLoggedIn();
-  } catch (e) {
-    console.error(e);
+  let isLineLoggedIn = false;
+  let displayText = '';
+
+  isLineLoggedIn = liff.isLoggedIn();
+  isLoggedIn = Boolean(getFromStorage(KEY_TOKEN, 'SESSION'));
+
+  if (isLineLoggedIn) {
+    displayText = ' (LINE 會員)';
+  } else if (isLoggedIn) {
+    displayText = '(一般會員)';
+  } else {
+    displayText = '(未登入)';
   }
 
   return (
@@ -20,7 +30,7 @@ export function NavbarComp() {
         />
         <p className="text-white flex">
           Yahoo！即時通
-          {isLoggedIn ? ' (已登入)' : ' (未登入)'}
+          <span className="text-white pl-2">{displayText}</span>
         </p>
       </div>
 
