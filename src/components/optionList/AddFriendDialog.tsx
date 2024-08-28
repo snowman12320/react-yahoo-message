@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
   Input,
   Label,
 } from '@/components/';
@@ -23,9 +24,8 @@ export function AddFriendDialog() {
       navigator.clipboard
         .writeText(inviteCodeInput.value)
         .then(() => {
-          console.info('Invite code copied to clipboard');
-          setIsCopied(true); // Update state on successful copy
-          setTimeout(() => setIsCopied(false), 2000); // Reset state after 2 seconds
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 2000);
         })
         .catch((err) => {
           console.error('Failed to copy: ', err);
@@ -42,9 +42,15 @@ export function AddFriendDialog() {
         />
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent
+        aria-describedby="dialog-description"
+        className="sm:max-w-md"
+      >
         <DialogHeader>
           <DialogTitle>邀約成為好友</DialogTitle>
+          <DialogDescription id="dialog-description">
+            請複製邀約碼並發送給您的朋友，或輸入您朋友的邀約碼以添加他們為好友。
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex items-center space-x-2 mt-5">
@@ -69,7 +75,11 @@ export function AddFriendDialog() {
             className="px-3"
             onClick={copyCode}
           >
-            {isCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            {isCopied ? (
+              <Check className="size-4" />
+            ) : (
+              <Copy className="size-4" />
+            )}
           </Button>
         </div>
 
