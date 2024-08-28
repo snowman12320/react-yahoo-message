@@ -43,10 +43,10 @@
     "tailwindcss-animate": "^1.0.6",
     "vite": "^4.3.9",
     "xp.css": "^0.2.6",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@line/liff": "^2.24.0"
   },
   "devDependencies": {
-    "@line/liff": "^2.24.0",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.8.0",
     "@types/react": "^18.0.37",
