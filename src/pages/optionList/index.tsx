@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
-import {
-  Mail, Loader2, Settings,
-} from 'lucide-react';
+import { useEffect } from 'react';
+import { Mail, Settings } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 
+import {
+  AddFriendDialog,
+  MessageBoard,
+  StatusGroup,
+  ComplexList,
+  LogoutBtn,
+  Input,
+} from '@/components/';
 import { useCurrentUser } from '@/hooks';
-import { LogoutBtn } from '@/components/login/LogoutBtn';
-import { Input } from '@/components/ui/input';
-import { StatusGroup } from '@/components/optionList/StatusGroup';
-import ComplexList from '@/components/optionList/ComplexList';
 import { useToast } from '@/components/ui/use-toast';
-import { AddFriendDialog, MessageBoard } from '@/components/';
 import { setCurrentUser } from '@/features/userSlice';
 import { fetchUser } from '@/api';
 import { Profile } from '@/types';
@@ -18,7 +19,6 @@ import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
   const currentUser = useCurrentUser();
-  const [showImage, setShowImage] = useState(false);
   const { toast } = useToast();
   const dispatch = useDispatch();
 
@@ -27,35 +27,42 @@ export default function OptionList() {
       const res = await fetchUser();
       dispatch(setCurrentUser(res.data as unknown as Profile));
     };
+
     fetchData();
-    setShowImage(true);
   }, [dispatch]);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'online':
+        return 'bg-green-500';
+      case 'busy':
+        return 'bg-red-500';
+      case 'offline':
+        return 'bg-gray-300';
+      default:
+        return 'bg-black';
+    }
+  };
 
   return (
     <div className="container space-y-3 relative">
       {/* 頭像區 */}
       <section className="flex gap-6 py-3 justify-between">
         <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full">
-          {showImage ? (
-            <img
-              src={currentUser?.photo || defaultAvatar}
-              alt="user avatar"
-              className="size-full object-cover"
-            />
-          ) : (
-            <Loader2 className="size-5 animate-spin" />
-          )}
+          <img
+            src={currentUser?.photo || defaultAvatar}
+            alt="user avatar"
+            className="size-full object-cover"
+          />
         </div>
 
         <div className="flex flex-col gap-3 justify-around w-full">
           <div className="flex items-center gap-3 justify-around flex-1 ">
-            <span className="inline-block size-2 rounded-full bg-black " />
+            <span
+              className={`inline-block size-2 rounded-full ${getStatusColor(currentUser?.onlineStatus)}`}
+            />
             <h2 className="text-base font-bold">
-              {currentUser ? (
-                <p>{currentUser.name}</p>
-              ) : (
-                <p>No user logged in</p>
-              )}
+              <p>{currentUser?.name || 'No user'}</p>
             </h2>
             <div className="yahoo-btn-cls">
               <StatusGroup />
@@ -96,7 +103,7 @@ export default function OptionList() {
         />
       </section>
 
-      {/* 列表 */}
+      {/* 複合列表 */}
       <ComplexList />
     </div>
   );

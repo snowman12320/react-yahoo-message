@@ -6,6 +6,7 @@ export type Profile = {
   gender: string
   photo: string
   createdAt: string
+  lineUserId?: string
 }
 
 export type User = {

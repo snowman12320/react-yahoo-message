@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { useMemo } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useCurrentUser } from '@/hooks';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,12 +13,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { setCurrentUser } from '@/features/userSlice';
+import { updateProfile } from '@/api';
+import { toast } from '../ui/use-toast';
 
 export function StatusGroup() {
-  const [status, setStatus] = React.useState('online');
+  const currentUser = useCurrentUser();
+  const dispatch = useDispatch();
 
-  // useMemo
-  const memoStatus = useMemo(() => status, [status]);
+  const [status, setStatus] = useState(currentUser?.onlineStatus);
+
+  useEffect(() => {
+    setStatus(currentUser?.onlineStatus);
+  }, [currentUser?.onlineStatus]);
+
+  const updateStatus = useCallback(
+    (newStatus: string) => {
+      if (newStatus !== currentUser?.onlineStatus) {
+        dispatch(setCurrentUser({ ...currentUser, onlineStatus: newStatus }));
+        updateProfile({ ...currentUser, onlineStatus: newStatus });
+        toast({
+          description: '狀態已更新',
+          variant: 'success',
+        });
+      }
+    },
+    [dispatch, currentUser],
+  );
 
   return (
     <DropdownMenu>
@@ -34,8 +56,11 @@ export function StatusGroup() {
         <DropdownMenuLabel inset={false}>狀態設定</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
-          value={memoStatus}
-          onValueChange={setStatus}
+          value={status}
+          onValueChange={(newStatus) => {
+            setStatus(newStatus);
+            updateStatus(newStatus);
+          }}
         >
           <DropdownMenuRadioItem
             className="text-yellow-300 fill-yellow-300 hover:!text-yellow-300"
