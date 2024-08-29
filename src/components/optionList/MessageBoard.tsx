@@ -44,7 +44,7 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
         >
           <div className="!border !border-gray-800 flex-1">
             <Textarea
-              placeholder="你在做什麼？"
+              placeholder="留下心情或分享連結..."
               value={inputValue}
               className="w-full h-full p-1"
               onChange={(e) => setInputValue(e.target.value)}
@@ -59,7 +59,24 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
         </form>
       ) : (
         <div className="flex items-center w-full group">
-          <p className="text-sm flex-1 ">{currentUser?.messageBoard}</p>
+          {currentUser?.messageBoard?.startsWith('https') ? (
+            <a
+              href={currentUser?.messageBoard}
+              className="text-sm flex-1 underline break-all"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {currentUser?.messageBoard}
+            </a>
+          ) : (
+            <p
+              className={`text-sm flex-1 ${!currentUser?.messageBoard?.trim() ? 'italic text-gray-400' : ''}`}
+            >
+              {currentUser?.messageBoard?.trim()
+                ? currentUser.messageBoard
+                : '留下心情或分享連結...'}
+            </p>
+          )}
           <Edit
             className="cursor-pointer size-6 pl-1 opacity-0 group-hover:opacity-100"
             onClick={() => setIsEditing(true)}

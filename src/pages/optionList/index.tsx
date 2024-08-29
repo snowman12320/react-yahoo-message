@@ -59,7 +59,7 @@ export default function OptionList() {
         <div className="flex flex-col gap-3 justify-around w-full">
           <div className="flex items-center gap-3 justify-around flex-1 ">
             <span
-              className={`inline-block size-2 rounded-full ${getStatusColor(currentUser?.onlineStatus)}`}
+              className={`inline-block size-3 rounded-full ${getStatusColor(currentUser?.onlineStatus)}`}
             />
             <h2 className="text-base font-bold">
               <p>{currentUser?.name || 'No user'}</p>
