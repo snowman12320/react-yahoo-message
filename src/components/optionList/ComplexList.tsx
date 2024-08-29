@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-export default function ComplexList() {
+export function ComplexList() {
   return (
     <Accordion
       type="single"

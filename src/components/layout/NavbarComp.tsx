@@ -26,6 +26,10 @@ export function NavbarComp() {
     }
   }, [location.pathname]);
 
+  const closeWindow = () => {
+    liff.closeWindow();
+  };
+
   return (
     <nav className="title-bar !p-4">
       <div className="title-bar-text flex items-center gap-1">
@@ -52,6 +56,7 @@ export function NavbarComp() {
         <button
           type="button"
           aria-label="Close"
+          onClick={closeWindow}
         />
       </div>
     </nav>

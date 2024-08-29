@@ -1,7 +1,7 @@
 import { redirect } from 'react-router-dom';
 
 import { fetchData } from '@/api';
-import { User, RegisterFormValues } from '@/types';
+import { User, RegisterFormValues, Profile } from '@/types';
 import {
   KEY_TOKEN,
   getFromStorage,
@@ -35,3 +35,5 @@ export const isLoggedGuard = async () => {
 };
 
 export const fetchUser = async () => fetchData<User>('GET', '/api/test/v1/user/profile', undefined);
+
+export const updateProfile = async (params: Profile) => fetchData<User>('PUT', '/api/test/v1/user/profile', params);
