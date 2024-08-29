@@ -1,24 +1,30 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import liff from '@line/liff';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import logo from '@/assets/images/logos/logins.png';
 import { KEY_TOKEN, getFromStorage } from '@/api';
 
 export function NavbarComp() {
-  let isLoggedIn = false;
-  let isLineLoggedIn = false;
-  let displayText = '';
+  const location = useLocation();
+  const [displayText, setDisplayText] = useState('');
 
-  isLineLoggedIn = liff.isLoggedIn();
-  isLoggedIn = Boolean(getFromStorage(KEY_TOKEN, 'SESSION'));
+  useEffect(() => {
+    let isLoggedIn = false;
+    let isLineLoggedIn = false;
 
-  if (isLineLoggedIn) {
-    displayText = ' (LINE 會員)';
-  } else if (isLoggedIn) {
-    displayText = '(一般會員)';
-  } else {
-    displayText = '(未登入)';
-  }
+    isLineLoggedIn = liff.isLoggedIn();
+    isLoggedIn = Boolean(getFromStorage(KEY_TOKEN, 'SESSION'));
+
+    if (isLineLoggedIn) {
+      setDisplayText('(LINE 會員)');
+    } else if (isLoggedIn) {
+      setDisplayText('(一般會員)');
+    } else {
+      setDisplayText('(已登出)');
+    }
+  }, [location.pathname]);
 
   return (
     <nav className="title-bar !p-4">

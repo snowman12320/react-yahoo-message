@@ -14,6 +14,7 @@ import { AddFriendDialog, MessageBoard } from '@/components/';
 import { setCurrentUser } from '@/features/userSlice';
 import { fetchUser } from '@/api';
 import { Profile } from '@/types';
+import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
   const currentUser = useCurrentUser();
@@ -37,7 +38,7 @@ export default function OptionList() {
         <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full">
           {showImage ? (
             <img
-              src={currentUser?.photo}
+              src={currentUser?.photo || defaultAvatar}
               alt="user avatar"
               className="size-full object-cover"
             />
