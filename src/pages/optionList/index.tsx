@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Mail, Settings } from 'lucide-react';
 
 import {
@@ -19,14 +19,18 @@ import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 export default function OptionList() {
   const { setCurrentUser, getCurrentUser } = useCurrentUser();
 
+  const memoizedSetCurrentUser = useCallback((user: Profile) => {
+    setCurrentUser(user);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetchUser();
-      setCurrentUser(res.data as unknown as Profile);
+      memoizedSetCurrentUser(res.data as unknown as Profile);
     };
 
     fetchData();
-  });
+  }, [memoizedSetCurrentUser]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -50,7 +54,7 @@ export default function OptionList() {
             src={getCurrentUser()?.photo || defaultAvatar}
             alt="user avatar"
             className="size-full object-cover"
-            onError={(e) => {
+            onError={e => {
               e.currentTarget.src = defaultAvatar;
             }}
           />

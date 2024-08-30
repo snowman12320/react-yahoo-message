@@ -22,5 +22,7 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'no-console': [2, { allow: ['warn', 'error', 'info', 'dir'] }],
     'react/jsx-props-no-spreading': 0,
+    'react-hooks/exhaustive-deps': 0,
+    'arrow-parens': [2, 'as-needed'],
   },
 };
