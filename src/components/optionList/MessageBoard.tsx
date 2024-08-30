@@ -45,7 +45,7 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
               placeholder="留下心情或分享連結..."
               value={inputValue}
               className="w-full h-full p-1"
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={e => setInputValue(e.target.value)}
             />
           </div>
           <Button

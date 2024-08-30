@@ -27,7 +27,7 @@ export function AddFriendDialog() {
           setIsCopied(true);
           setTimeout(() => setIsCopied(false), 2000);
         })
-        .catch((err) => {
+        .catch(err => {
           console.error('Failed to copy: ', err);
         });
     }

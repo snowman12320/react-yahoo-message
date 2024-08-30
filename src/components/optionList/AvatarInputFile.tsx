@@ -35,7 +35,7 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
           id="picture"
           type="file"
           accept="image/*"
-          onChange={(e) => {
+          onChange={e => {
             handUploadProfilePhoto(e.target.files?.[0]);
           }}
         />

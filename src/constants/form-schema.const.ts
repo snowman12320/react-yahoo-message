@@ -27,7 +27,7 @@ const BIRTHDAY_SCHEMA = z.object({
 });
 
 // 同意條款欄位的表單驗證規則
-const AGREEMENT_SCHEMA = z.boolean().refine((val) => val === true, {
+const AGREEMENT_SCHEMA = z.boolean().refine(val => val === true, {
   message: '請同意條款',
 });
 
@@ -65,7 +65,7 @@ export const REGISTRATION_SCHEMA = z
     password: PASSWORD_SCHEMA,
     confirmPassword: CONFIRM_PASSWORD_SCHEMA,
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: '密碼不一致',
     path: ['confirmPassword'],
   });

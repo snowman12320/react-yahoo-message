@@ -19,6 +19,6 @@ liff
       </React.StrictMode>,
     );
   })
-  .catch((e) => {
+  .catch(e => {
     console.error(`LIFF error: ${e.message}`);
   });

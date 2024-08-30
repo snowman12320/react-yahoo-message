@@ -19,7 +19,7 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
       storeInStorage('yahooCurrentUser', action.payload);
     },
-    clearCurrentUser: (state) => {
+    clearCurrentUser: state => {
       state.currentUser = null;
       removeFromStorage('yahooCurrentUser');
     },

@@ -55,7 +55,7 @@ export function StatusGroup() {
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup
           value={status}
-          onValueChange={(newStatus) => {
+          onValueChange={newStatus => {
             setStatus(newStatus);
             updateStatus(newStatus);
           }}
