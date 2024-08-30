@@ -10,8 +10,8 @@ import {
   LogoutBtn,
   Input,
   toast,
-} from '@/components/';
-import { useCurrentUser } from '@/hooks/';
+} from '@/components';
+import { useCurrentUser } from '@/hooks';
 import { fetchUser } from '@/api';
 import { Profile } from '@/types';
 import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
@@ -26,7 +26,7 @@ export default function OptionList() {
     };
 
     fetchData();
-  }, [setCurrentUser]);
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
