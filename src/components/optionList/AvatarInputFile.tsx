@@ -1,28 +1,25 @@
-import { useDispatch } from 'react-redux';
-import { useIsLoading } from '@/hooks';
-
-import { Input, Upload, Loader2 } from '@/components/';
+import {
+  Input, Upload, Loader2, toast,
+} from '@/components';
 import { uploadProfilePhoto } from '@/api';
 import { Profile } from '@/types';
-import { useCurrentUser } from '@/hooks/';
-import { setLoading } from '@/features/loadingSlice';
-import { toast } from '@/components';
+import { useLoading, useCurrentUser } from '@/hooks';
 
 export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
-  const dispatch = useDispatch();
-  const isLoading = useIsLoading();
+  const { getIsLoading, setLoading } = useLoading();
+  const isLoading = getIsLoading();
   const { setCurrentUser } = useCurrentUser();
 
   async function handUploadProfilePhoto(file: File | undefined) {
     if (file) {
-      dispatch(setLoading(true));
+      setLoading(true);
       const formData = new FormData();
       formData.append('file', file);
       const res = await uploadProfilePhoto(formData);
       const { src } = res.data as unknown as { src: string };
 
       setCurrentUser({ ...currentUser, photo: src });
-      dispatch(setLoading(false));
+      setLoading(false);
       toast({
         description: res.message,
         variant: 'success',

@@ -1,15 +1,16 @@
 import { Outlet } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import { useIsLoading } from '@/hooks';
-import { Loader2, NavbarComp, Toaster } from '@/components/';
+import { useLoading } from '@/hooks';
+import { Loader2, NavbarComp, Toaster } from '@/components';
 
 const setWindowWidth = () => {
   window.innerWidth = 330;
 };
 
 function Layout() {
-  const isLoading = useIsLoading();
+  const { getIsLoading } = useLoading();
+  const isLoading = getIsLoading();
 
   useEffect(() => {
     setWindowWidth();

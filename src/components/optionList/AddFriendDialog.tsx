@@ -11,7 +11,7 @@ import {
   DialogDescription,
   Input,
   Label,
-} from '@/components/';
+} from '@/components';
 
 export function AddFriendDialog() {
   const [isCopied, setIsCopied] = useState(false);

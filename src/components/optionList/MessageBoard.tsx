@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Check, Edit } from 'lucide-react';
 
-import { Button, Textarea } from '@/components/';
+import { Button, Textarea, toast } from '@/components';
 import { Profile } from '@/types';
 import { updateProfile } from '@/api';
-import { useCurrentUser } from '@/hooks/';
-import { toast } from '../ui/use-toast';
+import { useCurrentUser } from '@/hooks';
 
 type MessageBoardProps = {
   currentUser: Profile;

@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-import { useCurrentUser } from '@/hooks/';
-import { Button } from '@/components/';
+import { useCurrentUser } from '@/hooks';
+import { Button } from '@/components';
 import {
   DropdownMenu,
   DropdownMenuContent,

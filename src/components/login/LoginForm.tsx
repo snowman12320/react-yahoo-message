@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import liff from '@line/liff';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm, DevTool } from '@/core/form';
@@ -17,15 +16,16 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { LoginFormValues } from '@/types';
-import { setLoading } from '@/features/loadingSlice';
-import { login, lineLogin } from '@/api';
+import {
+  login, lineLogin, KEY_TOKEN, storeInStorage,
+} from '@/api';
 import { LOGIN_SCHEMA } from '@/constants';
 import { useToast } from '@/components/ui/use-toast';
-import { KEY_TOKEN, storeInStorage } from '@/api/';
+import { useLoading } from '@/hooks';
 
 export function LoginForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { setLoading } = useLoading();
   const { toast } = useToast();
 
   const loginForm = useForm({
@@ -38,7 +38,7 @@ export function LoginForm() {
   });
 
   const submitLogin = async (values: LoginFormValues) => {
-    dispatch(setLoading(true));
+    setLoading(true);
     try {
       await login({
         email: values.email,
@@ -57,12 +57,12 @@ export function LoginForm() {
         variant: 'error',
       });
     } finally {
-      dispatch(setLoading(false));
+      setLoading(false);
     }
   };
 
   const submitLineLogin = async () => {
-    dispatch(setLoading(true));
+    setLoading(true);
     try {
       await liff.login();
     } catch (err) {
@@ -72,7 +72,7 @@ export function LoginForm() {
         variant: 'error',
       });
     } finally {
-      dispatch(setLoading(false));
+      setLoading(false);
     }
   };
 

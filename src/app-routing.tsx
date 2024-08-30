@@ -4,7 +4,7 @@ import ErrorPage from '@/pages/ErrorPage';
 import LogInPage from '@/pages/login/LogInPage';
 import Layout from '@/pages/Layout/Layout';
 import RegisterPage from '@/pages/login/RegisterPage';
-import OptionList from '@/pages/optionList/';
+import OptionList from '@/pages/optionList';
 
 import { notLoggedGuard, isLoggedGuard } from '@/api';
 

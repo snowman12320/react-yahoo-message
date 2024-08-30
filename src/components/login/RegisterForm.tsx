@@ -1,11 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch } from 'react-redux';
 
-import { useIsLoading } from '@/hooks';
-import { setLoading } from '@/features/loadingSlice';
+import { useLoading } from '@/hooks';
 import { useForm, DevTool } from '@/core/form';
 import { useNavigate, Link } from '@/core/router';
-import { RegisterFormValues } from '@/types/';
+import { RegisterFormValues } from '@/types';
 import {
   Button,
   Input,
@@ -18,15 +16,15 @@ import {
   RadioGroup,
   RadioGroupItem,
   Label,
-} from '@/components/';
+} from '@/components';
 import { register } from '@/api/user.api';
 import { REGISTRATION_SCHEMA } from '@/constants';
 import { useToast } from '@/components/ui/use-toast';
 
 export function RegisterForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isLoading = useIsLoading();
+  const { getIsLoading, setLoading } = useLoading();
+  const isLoading = getIsLoading();
   const { toast } = useToast();
 
   const registerForm = useForm({
@@ -42,7 +40,7 @@ export function RegisterForm() {
 
   async function submitRegister(values: RegisterFormValues) {
     try {
-      dispatch(setLoading(true));
+      setLoading(true);
       const res = await register(values);
 
       if (res.status === 'success') {
@@ -61,7 +59,7 @@ export function RegisterForm() {
         });
       }
     } finally {
-      dispatch(setLoading(false));
+      setLoading(false);
     }
   }
 

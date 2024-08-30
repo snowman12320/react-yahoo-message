@@ -1,4 +1,4 @@
-import { Loader2 } from '@/components/';
+import { Loader2 } from '@/components';
 
 import {
   Accordion,
