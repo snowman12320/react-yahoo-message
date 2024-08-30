@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Check, Edit } from 'lucide-react';
-import { useDispatch } from 'react-redux';
 
 import { Button, Textarea } from '@/components/';
 import { Profile } from '@/types';
 import { updateProfile } from '@/api';
-import { setCurrentUser } from '@/features/userSlice';
+import { useCurrentUser } from '@/hooks/';
 import { toast } from '../ui/use-toast';
 
 type MessageBoardProps = {
@@ -13,9 +12,9 @@ type MessageBoardProps = {
 };
 
 export function MessageBoard({ currentUser }: MessageBoardProps) {
-  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const { setCurrentUser } = useCurrentUser();
 
   useEffect(() => {
     setInputValue(currentUser?.messageBoard);
@@ -25,7 +24,7 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
     event.preventDefault();
 
     const updatedProfileContent = { ...currentUser, messageBoard: inputValue };
-    dispatch(setCurrentUser(updatedProfileContent));
+    setCurrentUser(updatedProfileContent);
     updateProfile(updatedProfileContent);
     toast({
       description: '留言板已更新',

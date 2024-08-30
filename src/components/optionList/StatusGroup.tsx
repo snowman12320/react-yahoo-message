@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { useCurrentUser } from '@/hooks';
 
-import { Button } from '@/components/ui/button';
+import { useCurrentUser } from '@/hooks/';
+import { Button } from '@/components/';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,15 +12,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { setCurrentUser } from '@/features/userSlice';
 import { updateProfile } from '@/api';
 import { toast } from '../ui/use-toast';
 
 export function StatusGroup() {
-  const currentUser = useCurrentUser();
-  const dispatch = useDispatch();
+  const { setCurrentUser, getCurrentUser } = useCurrentUser();
+  const currentUser = getCurrentUser();
 
-  const [status, setStatus] = useState(currentUser?.onlineStatus);
+  const [status, setStatus] = useState(getCurrentUser()?.onlineStatus);
 
   useEffect(() => {
     setStatus(currentUser?.onlineStatus);
@@ -30,7 +28,7 @@ export function StatusGroup() {
   const updateStatus = useCallback(
     (newStatus: string) => {
       if (newStatus !== currentUser?.onlineStatus) {
-        dispatch(setCurrentUser({ ...currentUser, onlineStatus: newStatus }));
+        setCurrentUser({ ...currentUser, onlineStatus: newStatus });
         updateProfile({ ...currentUser, onlineStatus: newStatus });
         toast({
           description: '狀態已更新',
@@ -38,7 +36,7 @@ export function StatusGroup() {
         });
       }
     },
-    [dispatch, currentUser],
+    [currentUser, setCurrentUser],
   );
 
   return (

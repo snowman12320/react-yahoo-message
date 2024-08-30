@@ -1,2 +1,2 @@
 export * from './useIsLoading';
-export * from './useCurrentUser';
+export * from './useCurrentUser.ts';

@@ -4,13 +4,14 @@ import { useIsLoading } from '@/hooks';
 import { Input, Upload, Loader2 } from '@/components/';
 import { uploadProfilePhoto } from '@/api';
 import { Profile } from '@/types';
-import { setCurrentUser } from '@/features/userSlice';
+import { useCurrentUser } from '@/hooks/';
 import { setLoading } from '@/features/loadingSlice';
-import { toast } from '../ui/use-toast';
+import { toast } from '@/components';
 
 export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
+  const { setCurrentUser } = useCurrentUser();
 
   async function handUploadProfilePhoto(file: File | undefined) {
     if (file) {
@@ -20,7 +21,7 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
       const res = await uploadProfilePhoto(formData);
       const { src } = res.data as unknown as { src: string };
 
-      dispatch(setCurrentUser({ ...currentUser, photo: src }));
+      setCurrentUser({ ...currentUser, photo: src });
       dispatch(setLoading(false));
       toast({
         description: res.message,

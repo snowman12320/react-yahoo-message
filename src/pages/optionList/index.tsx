@@ -1,36 +1,32 @@
 import { useEffect } from 'react';
 import { Mail, Settings } from 'lucide-react';
-import { useDispatch } from 'react-redux';
 
 import {
   AddFriendDialog,
+  AvatarInputFile,
   MessageBoard,
   StatusGroup,
   ComplexList,
   LogoutBtn,
   Input,
-  AvatarInputFile,
+  toast,
 } from '@/components/';
-import { useCurrentUser } from '@/hooks';
-import { useToast } from '@/components/ui/use-toast';
-import { setCurrentUser } from '@/features/userSlice';
+import { useCurrentUser } from '@/hooks/';
 import { fetchUser } from '@/api';
 import { Profile } from '@/types';
 import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
-  const currentUser = useCurrentUser();
-  const { toast } = useToast();
-  const dispatch = useDispatch();
+  const { setCurrentUser, getCurrentUser } = useCurrentUser();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetchUser();
-      dispatch(setCurrentUser(res.data as unknown as Profile));
+      setCurrentUser(res.data as unknown as Profile);
     };
 
     fetchData();
-  }, [dispatch]);
+  }, [setCurrentUser]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -51,27 +47,30 @@ export default function OptionList() {
       <section className="flex gap-6 py-3 justify-between">
         <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full relative group ">
           <img
-            src={currentUser?.photo || defaultAvatar}
+            src={getCurrentUser()?.photo || defaultAvatar}
             alt="user avatar"
             className="size-full object-cover"
+            onError={(e) => {
+              e.currentTarget.src = defaultAvatar;
+            }}
           />
-          <AvatarInputFile currentUser={currentUser} />
+          <AvatarInputFile currentUser={getCurrentUser()} />
         </div>
 
         <div className="flex flex-col gap-3 justify-around w-full">
           <div className="flex items-center gap-3 justify-around flex-1 ">
             <span
-              className={`inline-block size-3 rounded-full ${getStatusColor(currentUser?.onlineStatus)}`}
+              className={`inline-block size-3 rounded-full ${getStatusColor(getCurrentUser()?.onlineStatus)}`}
             />
             <h2 className="text-base font-bold">
-              <p>{currentUser?.name || 'No user'}</p>
+              <p>{getCurrentUser()?.name || 'No user'}</p>
             </h2>
             <div className="yahoo-btn-cls">
               <StatusGroup />
             </div>
           </div>
 
-          <MessageBoard currentUser={currentUser} />
+          <MessageBoard currentUser={getCurrentUser()} />
 
           <div className="flex gap-3 justify-between items-center">
             <div className="flex gap-3 items-center">
