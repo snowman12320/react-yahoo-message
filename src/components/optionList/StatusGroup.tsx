@@ -45,7 +45,7 @@ export function StatusGroup() {
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
-        className="hover:bg-transparent "
+        className="hover:bg-transparent"
       >
         <Button className="bg-transparent w-8 p-0">
           <ChevronDown />

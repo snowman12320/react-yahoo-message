@@ -16,12 +16,12 @@ function Layout() {
   }, []);
 
   return (
-    <div className="rounded-xl  overflow-hidden container  px-0 window !bg-white h-screen">
+    <div className="rounded-xl  overflow-hidden container  px-0 window !bg-white h-[100vh]">
       <NavbarComp />
 
-      <main className="flex flex-col items-center justify-start window-body bg-white relative h-[95vh]">
+      <main className="flex flex-col items-center justify-start window-body bg-white relative h-[93vh] !m-[3px]">
         {isLoading && (
-          <section className="absolute inset-0 backdrop-blur-lg">
+          <section className="absolute inset-0 backdrop-blur-lg z-10">
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <Loader2 className="mr-2 size-5 animate-spin " />
             </div>

@@ -9,6 +9,7 @@ import {
   ComplexList,
   LogoutBtn,
   Input,
+  AvatarInputFile,
 } from '@/components/';
 import { useCurrentUser } from '@/hooks';
 import { useToast } from '@/components/ui/use-toast';
@@ -48,12 +49,13 @@ export default function OptionList() {
     <div className="container space-y-3 relative">
       {/* 頭像區 */}
       <section className="flex gap-6 py-3 justify-between">
-        <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full">
+        <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full relative group ">
           <img
             src={currentUser?.photo || defaultAvatar}
             alt="user avatar"
             className="size-full object-cover"
           />
+          <AvatarInputFile currentUser={currentUser} />
         </div>
 
         <div className="flex flex-col gap-3 justify-around w-full">

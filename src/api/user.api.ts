@@ -37,3 +37,5 @@ export const isLoggedGuard = async () => {
 export const fetchUser = async () => fetchData<User>('GET', '/api/test/v1/user/profile', undefined);
 
 export const updateProfile = async (params: Profile) => fetchData<User>('PUT', '/api/test/v1/user/profile', params);
+
+export const uploadProfilePhoto = async (params: FormData) => fetchData<User>('POST', '/upload/profilePhoto', params);
