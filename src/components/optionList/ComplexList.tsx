@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   Accordion,
@@ -6,23 +6,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { fetchFriendList } from '@/api';
-import { FriendListResponse } from '@/types';
-import { useCurrentUser } from '@/hooks';
+import { useFriendList, useCurrentUser } from '@/hooks';
 
 export function ComplexList() {
   const { getStatusColor } = useCurrentUser();
-  const [friendList, setFriendList] = useState<FriendListResponse>([]);
+  const { friendList, updateFriendList } = useFriendList();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const {
-        data: { friends },
-      } = await fetchFriendList();
-      setFriendList(friends);
-    };
-
-    fetchData();
+    updateFriendList();
   }, []);
 
   return (

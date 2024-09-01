@@ -15,11 +15,12 @@ import {
   Label,
   toast,
 } from '@/components';
-import { useCurrentUser } from '@/hooks';
+import { useCurrentUser, useFriendList } from '@/hooks';
 import { addFriend } from '@/api';
 
 export function AddFriendDialog() {
   const { getCurrentUser } = useCurrentUser();
+  const { updateFriendList } = useFriendList();
   const [isCopied, setIsCopied] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [inputCode, setInputCode] = useState('');
@@ -45,23 +46,20 @@ export function AddFriendDialog() {
     event.preventDefault();
     setIsAdding(true);
     let res = { status: '', message: '' };
-    console.info('inputCode: ', inputCode);
 
     try {
       res = await addFriend(inputCode);
+      await updateFriendList();
     } catch (err) {
       console.error('addFriend: ', err);
       res.message = (err as Error).message;
     } finally {
-      setTimeout(() => {
-        setInputCode('');
-        toast({
-          description: res.message,
-          variant: res.status ? 'success' : 'error',
-        });
-
-        setIsAdding(false);
-      }, 1000);
+      setInputCode('');
+      setIsAdding(false);
+      toast({
+        description: res.message,
+        variant: res.status ? 'success' : 'error',
+      });
     }
   };
 
