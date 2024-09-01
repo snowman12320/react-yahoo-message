@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import {
   Accordion,
@@ -7,8 +7,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { useFriendList, useCurrentUser } from '@/hooks';
+import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 
-export function ComplexList() {
+export function ComplexList({ searchTerm }: {searchTerm: string}) {
   const { getStatusColor } = useCurrentUser();
   const { friendList, updateFriendList } = useFriendList();
 
@@ -16,24 +17,30 @@ export function ComplexList() {
     updateFriendList();
   }, []);
 
+  const filteredFriends = useMemo(
+    () => friendList.filter(friend => friend.name.toLowerCase().includes(searchTerm.toLowerCase())),
+    [friendList, searchTerm],
+  );
+
   return (
     <Accordion
       type="single"
       collapsible
       className="yahoo-btn-cls"
+      defaultValue="item-1"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>
-          {`好友列表（ ${friendList?.length} ) `}
+          {`好友列表（ ${filteredFriends.length} ) `}
         </AccordionTrigger>
         <AccordionContent>
-          {friendList.map(friend => (
+          {filteredFriends.map(friend => (
             <section
               key={friend._id}
               className="flex gap-5 py-2 px-3"
             >
               <img
-                src={friend.photo}
+                src={friend.photo || tempAvatar}
                 alt="friend avatar"
                 className="size-14 bg-slate-400 object-cover rounded-lg flex-none"
               />
@@ -73,7 +80,7 @@ export function ComplexList() {
         <AccordionContent>
           <section className="flex gap-6 py-3 justify-between flex-1 px-3">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/social-e030c.appspot.com/o/about%2FIMG_5026.jpg?alt=media&token=126ed273-0959-44d8-879e-8647c06d335c"
+              src={tempAvatar}
               alt="user avatar"
               className="w-14 h-14 bg-slate-400 object-cover "
             />

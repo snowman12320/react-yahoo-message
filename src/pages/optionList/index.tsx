@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { Mail, Settings } from 'lucide-react';
 
 import {
@@ -18,6 +18,7 @@ import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
   const { setCurrentUser, getCurrentUser, getStatusColor } = useCurrentUser();
+  const [searchTerm, setSearchTerm] = useState(''); // 新增
 
   const memoizedSetCurrentUser = useCallback((user: Profile) => {
     setCurrentUser(user);
@@ -92,11 +93,12 @@ export default function OptionList() {
           type="text"
           placeholder="搜尋好友"
           className="rounded-md"
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </section>
 
       {/* 複合列表 */}
-      <ComplexList />
+      <ComplexList searchTerm={searchTerm} />
     </div>
   );
 }
