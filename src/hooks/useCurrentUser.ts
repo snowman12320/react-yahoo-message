@@ -34,5 +34,23 @@ export function useCurrentUser() {
     }
   };
 
-  return { setCurrentUser, getCurrentUser, getStatusColor };
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'online':
+        return '(上線中）';
+      case 'busy':
+        return '(忙碌中）';
+      case 'offline':
+        return '(離線中）';
+      default:
+        return '';
+    }
+  };
+
+  return {
+    setCurrentUser,
+    getCurrentUser,
+    getStatusColor,
+    getStatusText,
+  };
 }

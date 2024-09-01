@@ -21,6 +21,13 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (inputValue.trim().length > 30) {
+      toast({
+        description: '留言板字數不可超過 30 字',
+        variant: 'error',
+      });
+      return;
+    }
 
     const updatedProfileContent = { ...currentUser, messageBoard: inputValue };
     setCurrentUser(updatedProfileContent);
@@ -40,13 +47,19 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
           onSubmit={handleSubmit}
           className="flex items-center w-full"
         >
-          <div className="!border !border-gray-800 flex-1">
-            <Textarea
-              placeholder="留下心情或分享連結..."
-              value={inputValue}
-              className="w-full h-full p-1"
-              onChange={e => setInputValue(e.target.value)}
-            />
+          <div className="flex-1">
+            <div className="!border !border-gray-800">
+              <Textarea
+                placeholder="留下心情或分享連結..."
+                value={inputValue}
+                className="w-full h-full p-1"
+                onChange={e => setInputValue(e.target.value)}
+              />
+            </div>
+            <p className="text-end">
+              {inputValue.length}
+              /30
+            </p>
           </div>
           <Button
             type="submit"

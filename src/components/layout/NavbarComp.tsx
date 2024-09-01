@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 
 import logo from '@/assets/images/logos/logins.png';
 import { KEY_TOKEN, getFromStorage } from '@/api';
+import { useCurrentUser } from '@/hooks';
 
 export function NavbarComp() {
   const location = useLocation();
   const [displayText, setDisplayText] = useState('');
+  const { getCurrentUser, getStatusText } = useCurrentUser();
 
   useEffect(() => {
     let isLoggedIn = false;
@@ -18,11 +20,11 @@ export function NavbarComp() {
     isLoggedIn = Boolean(getFromStorage(KEY_TOKEN, 'SESSION'));
 
     if (isLineLoggedIn) {
-      setDisplayText('(LINE 會員)');
+      setDisplayText('- LINE 會員');
     } else if (isLoggedIn) {
-      setDisplayText('(一般會員)');
+      setDisplayText('- 一般會員');
     } else {
-      setDisplayText('(已登出)');
+      setDisplayText('- 已登出');
     }
   }, [location.pathname]);
 
@@ -41,6 +43,9 @@ export function NavbarComp() {
         <p className="text-white flex">
           Yahoo！即時通
           <span className="text-white pl-2">{displayText}</span>
+          <span className="text-white pl-2">
+            {getStatusText(getCurrentUser()?.onlineStatus)}
+          </span>
         </p>
       </div>
 

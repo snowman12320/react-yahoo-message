@@ -37,7 +37,7 @@ export function ComplexList({ searchTerm }: {searchTerm: string}) {
           {filteredFriends.map(friend => (
             <section
               key={friend._id}
-              className="flex gap-5 py-2 px-3"
+              className="flex gap-5 py-2 px-3 hover:bg-gray-100 cursor-pointer"
             >
               <img
                 src={friend.photo || tempAvatar}

@@ -64,19 +64,19 @@ export function StatusGroup() {
             className="text-yellow-300 fill-yellow-300 hover:!text-yellow-300"
             value="online"
           >
-            上線中
+            上線
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
             className="text-red-500 fill-red-500 hover:!text-red-500"
             value="busy"
           >
-            忙碌中
+            忙碌
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
             className="text-gray-300 fill-gray-300 hover:!text-gray-300"
             value="offline"
           >
-            已下線
+            離線
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
