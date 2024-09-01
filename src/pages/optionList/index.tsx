@@ -17,7 +17,7 @@ import { Profile } from '@/types';
 import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
-  const { setCurrentUser, getCurrentUser } = useCurrentUser();
+  const { setCurrentUser, getCurrentUser, getStatusColor } = useCurrentUser();
 
   const memoizedSetCurrentUser = useCallback((user: Profile) => {
     setCurrentUser(user);
@@ -31,19 +31,6 @@ export default function OptionList() {
 
     fetchData();
   }, [memoizedSetCurrentUser]);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'online':
-        return 'bg-green-500';
-      case 'busy':
-        return 'bg-red-500';
-      case 'offline':
-        return 'bg-gray-300';
-      default:
-        return 'bg-black';
-    }
-  };
 
   return (
     <div className="container space-y-3 relative">
@@ -64,7 +51,7 @@ export default function OptionList() {
         <div className="flex flex-col gap-3 justify-around w-full">
           <div className="flex items-center gap-3 justify-around flex-1 ">
             <span
-              className={`inline-block size-3 rounded-full ${getStatusColor(getCurrentUser()?.onlineStatus)}`}
+              className={`inline-block size-4 rounded-full ${getStatusColor(getCurrentUser()?.onlineStatus)}`}
             />
             <h2 className="text-base font-bold">
               <p>{getCurrentUser()?.name || 'No user'}</p>

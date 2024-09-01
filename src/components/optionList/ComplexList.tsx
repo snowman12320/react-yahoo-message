@@ -1,4 +1,4 @@
-import { Loader2 } from '@/components';
+import { useEffect, useState } from 'react';
 
 import {
   Accordion,
@@ -6,8 +6,25 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { fetchFriendList } from '@/api';
+import { FriendListResponse } from '@/types';
+import { useCurrentUser } from '@/hooks';
 
 export function ComplexList() {
+  const { getStatusColor } = useCurrentUser();
+  const [friendList, setFriendList] = useState<FriendListResponse>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const {
+        data: { friends },
+      } = await fetchFriendList();
+      setFriendList(friends);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Accordion
       type="single"
@@ -15,26 +32,48 @@ export function ComplexList() {
       className="yahoo-btn-cls"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger>好友列表（0）</AccordionTrigger>
+        <AccordionTrigger>
+          {`好友列表（ ${friendList?.length} ) `}
+        </AccordionTrigger>
         <AccordionContent>
-          <section className="flex gap-6 py-3 justify-between flex-1 px-3">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/social-e030c.appspot.com/o/about%2FIMG_5026.jpg?alt=media&token=126ed273-0959-44d8-879e-8647c06d335c"
-              alt="user avatar"
-              className="w-14 h-14 bg-slate-400 object-cover "
-            />
+          {friendList.map(friend => (
+            <section
+              key={friend._id}
+              className="flex gap-5 py-2 px-3"
+            >
+              <img
+                src={friend.photo}
+                alt="friend avatar"
+                className="size-14 bg-slate-400 object-cover rounded-lg flex-none"
+              />
 
-            <div className="flex flex-col gap-3 justify-start w-full">
-              <div className="flex items-center gap-3 justify-start flex-1">
-                <span className="inline-block size-4 rounded-full bg-black " />
-                <p>123</p>
-              </div>
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex items-center gap-3 justify-start flex-1">
+                  <span
+                    className={`inline-block size-2 rounded-full ${getStatusColor(friend?.onlineStatus)}`}
+                  />
+                  <p>{friend.name}</p>
+                </div>
 
-              <div className="flex gap-3 justify-between items-center">
-                <Loader2 className="mr-2 size-5 animate-spin" />
+                <div className="flex gap-3 justify-between items-center flex-1">
+                  <p>
+                    {friend.messageBoard.startsWith('http') ? (
+                      <a
+                        href={friend.messageBoard}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-500"
+                      >
+                        {friend.messageBoard}
+                      </a>
+                    ) : (
+                      friend.messageBoard
+                    )}
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          ))}
         </AccordionContent>
       </AccordionItem>
 

@@ -1,5 +1,7 @@
-import { Copy, Plus, Check } from 'lucide-react';
-import { useState } from 'react';
+import {
+  Copy, Plus, Check, Loader2,
+} from 'lucide-react';
+import React, { useState } from 'react';
 
 import {
   Button,
@@ -11,10 +13,16 @@ import {
   DialogDescription,
   Input,
   Label,
+  toast,
 } from '@/components';
+import { useCurrentUser } from '@/hooks';
+import { addFriend } from '@/api';
 
 export function AddFriendDialog() {
+  const { getCurrentUser } = useCurrentUser();
   const [isCopied, setIsCopied] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [inputCode, setInputCode] = useState('');
 
   const copyCode = () => {
     const inviteCodeInput = document.getElementById(
@@ -31,6 +39,35 @@ export function AddFriendDialog() {
           console.error('Failed to copy: ', err);
         });
     }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsAdding(true);
+    let res = { status: '', message: '' };
+    console.info('inputCode: ', inputCode);
+
+    try {
+      res = await addFriend(inputCode);
+    } catch (err) {
+      console.error('addFriend: ', err);
+      res.message = (err as Error).message;
+    } finally {
+      setTimeout(() => {
+        setInputCode('');
+        toast({
+          description: res.message,
+          variant: res.status ? 'success' : 'error',
+        });
+
+        setIsAdding(false);
+      }, 1000);
+    }
+  };
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    handleSubmit(event as unknown as React.FormEvent<HTMLFormElement>);
   };
 
   return (
@@ -65,7 +102,7 @@ export function AddFriendDialog() {
               className=""
               type="text"
               id="inviteCode"
-              defaultValue="https://ui.shadcn.com/"
+              defaultValue={getCurrentUser()?._id}
               readOnly
             />
           </div>
@@ -92,19 +129,27 @@ export function AddFriendDialog() {
               輸入邀約碼
             </Label>
             <Input
-              className=""
+              className="inline-block"
               type="text"
               id="inputCode"
-              defaultValue=""
               placeholder="輸入對方邀約碼"
+              disabled={isAdding}
+              value={inputCode}
+              onChange={e => setInputCode(e.target.value)}
             />
           </div>
           <Button
             type="submit"
             size="sm"
             className="px-3"
+            disabled={isAdding || !inputCode}
+            onClick={handleButtonClick}
           >
-            <Plus className="h-4 w-4" />
+            {isAdding ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Plus className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </DialogContent>

@@ -24,5 +24,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'react-hooks/exhaustive-deps': 0,
     'arrow-parens': [2, 'as-needed'],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
 };

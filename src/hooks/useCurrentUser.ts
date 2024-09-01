@@ -21,5 +21,18 @@ export function useCurrentUser() {
     dispatch(setCurrentUserAction(user));
   };
 
-  return { setCurrentUser, getCurrentUser };
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'online':
+        return 'bg-green-500';
+      case 'busy':
+        return 'bg-red-500';
+      case 'offline':
+        return 'bg-gray-300';
+      default:
+        return 'bg-black';
+    }
+  };
+
+  return { setCurrentUser, getCurrentUser, getStatusColor };
 }

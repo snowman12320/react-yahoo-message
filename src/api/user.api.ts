@@ -39,3 +39,7 @@ export const fetchUser = async () => fetchData<User>('GET', '/api/test/v1/user/p
 export const updateProfile = async (params: Profile) => fetchData<User>('PUT', '/api/test/v1/user/profile', params);
 
 export const uploadProfilePhoto = async (params: FormData) => fetchData<User>('POST', '/upload/profilePhoto', params);
+
+export const fetchFriendList = async () => fetchData<User>('GET', '/api/v1/friendList');
+
+export const addFriend = async (friendId: string) => fetchData<User>('POST', `/api/v1/friendList/${friendId}`);
