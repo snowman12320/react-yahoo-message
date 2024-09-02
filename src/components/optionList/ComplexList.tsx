@@ -6,10 +6,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { ChatButton } from '@/components';
 import { useFriendList, useCurrentUser } from '@/hooks';
 import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 
-export function ComplexList({ searchTerm }: {searchTerm: string}) {
+export function ComplexList({ searchTerm }: { searchTerm: string }) {
   const { getStatusColor } = useCurrentUser();
   const { friendList, updateFriendList } = useFriendList();
 
@@ -37,23 +38,23 @@ export function ComplexList({ searchTerm }: {searchTerm: string}) {
           {filteredFriends.map(friend => (
             <section
               key={friend._id}
-              className="flex gap-5 py-2 px-3 hover:bg-gray-100 cursor-pointer"
+              className="flex cursor-pointer gap-5 px-3 py-2 hover:bg-gray-100"
             >
               <img
                 src={friend.photo || tempAvatar}
                 alt="friend avatar"
-                className="size-14 bg-slate-400 object-cover rounded-lg flex-none"
+                className="size-14 flex-none rounded-lg bg-slate-400 object-cover"
               />
 
-              <div className="flex flex-col gap-1 w-full">
-                <div className="flex items-center gap-3 justify-start flex-1">
+              <div className="flex w-full flex-col gap-1">
+                <div className="flex flex-1 items-center justify-start gap-3">
                   <span
                     className={`inline-block size-2 rounded-full ${getStatusColor(friend?.onlineStatus)}`}
                   />
                   <p>{friend.name}</p>
                 </div>
 
-                <div className="flex gap-3 justify-between items-center flex-1">
+                <div className="flex flex-1 items-center justify-between gap-3">
                   <p>
                     {friend.messageBoard.startsWith('http') ? (
                       <a
@@ -70,6 +71,8 @@ export function ComplexList({ searchTerm }: {searchTerm: string}) {
                   </p>
                 </div>
               </div>
+
+              <ChatButton friendId={friend._id} />
             </section>
           ))}
         </AccordionContent>
@@ -78,20 +81,20 @@ export function ComplexList({ searchTerm }: {searchTerm: string}) {
       <AccordionItem value="item-2">
         <AccordionTrigger>邀約列表（0）</AccordionTrigger>
         <AccordionContent>
-          <section className="flex gap-6 py-3 justify-between flex-1 px-3">
+          <section className="flex flex-1 justify-between gap-6 p-3">
             <img
               src={tempAvatar}
               alt="user avatar"
-              className="w-14 h-14 bg-slate-400 object-cover "
+              className="size-14 bg-slate-400 object-cover "
             />
 
-            <div className="flex flex-col gap-3 justify-start w-full">
-              <div className="flex items-center gap-3 justify-start flex-1">
+            <div className="flex w-full flex-col justify-start gap-3">
+              <div className="flex flex-1 items-center justify-start gap-3">
                 <span className="inline-block size-4 rounded-full bg-black " />
                 <p>好友名稱</p>
               </div>
 
-              <div className="flex gap-3 justify-between items-center">
+              <div className="flex items-center justify-between gap-3">
                 <p className="waiting-invite">等待對方接受邀請</p>
               </div>
             </div>
