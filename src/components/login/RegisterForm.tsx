@@ -74,7 +74,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>信箱帳號</FormLabel>
                 <FormControl>
                   <Input
@@ -93,7 +93,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>註冊密碼</FormLabel>
                 <FormControl>
                   <Input
@@ -112,7 +112,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="confirmPassword"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>確認密碼</FormLabel>
                 <FormControl>
                   <Input
@@ -132,7 +132,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>用戶名稱</FormLabel>
                 <FormControl>
                   <Input
@@ -152,7 +152,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="gender"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>用戶性別</FormLabel>
                 <FormControl>
                   <RadioGroup
@@ -160,21 +160,21 @@ export function RegisterForm() {
                     defaultValue={field.value}
                     className={`flex ${isLoading ? 'hidden' : ''}`}
                   >
-                    <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <div className="yahoo-btn-cls flex items-center space-x-2">
                       <RadioGroupItem
                         value="male"
                         id="male"
                       />
                       <Label htmlFor="male">男</Label>
                     </div>
-                    <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <div className="yahoo-btn-cls flex items-center space-x-2">
                       <RadioGroupItem
                         value="female"
                         id="female"
                       />
                       <Label htmlFor="female">女</Label>
                     </div>
-                    <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <div className="yahoo-btn-cls flex items-center space-x-2">
                       <RadioGroupItem
                         value="secret"
                         id="secret"

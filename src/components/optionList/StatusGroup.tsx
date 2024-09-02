@@ -45,7 +45,7 @@ export function StatusGroup() {
         asChild
         className="hover:bg-transparent"
       >
-        <Button className="bg-transparent w-8 p-0">
+        <Button className="w-8 bg-transparent p-0">
           <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
@@ -61,19 +61,19 @@ export function StatusGroup() {
           }}
         >
           <DropdownMenuRadioItem
-            className="text-yellow-300 fill-yellow-300 hover:!text-yellow-300"
+            className="fill-yellow-300 text-yellow-300 hover:!text-yellow-300"
             value="online"
           >
             上線
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
-            className="text-red-500 fill-red-500 hover:!text-red-500"
+            className="fill-red-500 text-red-500 hover:!text-red-500"
             value="busy"
           >
             忙碌
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
-            className="text-gray-300 fill-gray-300 hover:!text-gray-300"
+            className="fill-gray-300 text-gray-300 hover:!text-gray-300"
             value="offline"
           >
             離線

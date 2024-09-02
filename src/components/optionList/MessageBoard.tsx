@@ -41,18 +41,18 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
   };
 
   return (
-    <div className="flex yahoo-btn-cls">
+    <div className="yahoo-btn-cls flex">
       {isEditing ? (
         <form
           onSubmit={handleSubmit}
-          className="flex items-center w-full"
+          className="flex w-full items-center"
         >
           <div className="flex-1">
             <div className="!border !border-gray-800">
               <Textarea
                 placeholder="留下心情或分享連結..."
                 value={inputValue}
-                className="w-full h-full p-1"
+                className="size-full p-1"
                 onChange={e => setInputValue(e.target.value)}
               />
             </div>
@@ -69,11 +69,11 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
           </Button>
         </form>
       ) : (
-        <div className="flex items-center w-full group">
+        <div className="group flex w-full items-center">
           {currentUser?.messageBoard?.startsWith('https') ? (
             <a
               href={currentUser?.messageBoard}
-              className="text-sm flex-1 underline break-all"
+              className="flex-1 break-all text-sm underline"
               target="_blank"
               rel="noreferrer"
             >
@@ -81,7 +81,7 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
             </a>
           ) : (
             <p
-              className={`text-sm flex-1 ${!currentUser?.messageBoard?.trim() ? 'italic text-gray-400' : ''}`}
+              className={`flex-1 text-sm ${!currentUser?.messageBoard?.trim() ? 'italic text-gray-400' : ''}`}
             >
               {currentUser?.messageBoard?.trim()
                 ? currentUser.messageBoard
@@ -89,7 +89,7 @@ export function MessageBoard({ currentUser }: MessageBoardProps) {
             </p>
           )}
           <Edit
-            className="cursor-pointer size-6 pl-1 opacity-0 group-hover:opacity-100"
+            className="size-6 cursor-pointer pl-1 opacity-0 group-hover:opacity-100"
             onClick={() => setIsEditing(true)}
           />
         </div>

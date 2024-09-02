@@ -72,7 +72,7 @@ export function AddFriendDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <Plus
-          className="cursor-pointer size-6"
+          className="size-6 cursor-pointer"
           absoluteStrokeWidth
         />
       </DialogTrigger>
@@ -88,11 +88,11 @@ export function AddFriendDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex items-center space-x-2 mt-5">
-          <div className="grid flex-1 gap-2 relative">
+        <div className="mt-5 flex items-center space-x-2">
+          <div className="relative grid flex-1 gap-2">
             <Label
               htmlFor="inviteCode"
-              className="absolute left-0 -top-5"
+              className="absolute -top-5 left-0"
             >
               複製邀約碼
             </Label>
@@ -118,11 +118,11 @@ export function AddFriendDialog() {
           </Button>
         </div>
 
-        <div className="flex items-center space-x-2 mt-5">
-          <div className="grid flex-1 gap-2 relative">
+        <div className="mt-5 flex items-center space-x-2">
+          <div className="relative grid flex-1 gap-2">
             <Label
               htmlFor="inputCode"
-              className="absolute left-0 -top-5"
+              className="absolute -top-5 left-0"
             >
               輸入邀約碼
             </Label>
@@ -144,9 +144,9 @@ export function AddFriendDialog() {
             onClick={handleButtonClick}
           >
             {isAdding ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader2 className="size-4 animate-spin" />
             ) : (
-              <Plus className="h-4 w-4" />
+              <Plus className="size-4" />
             )}
           </Button>
         </div>

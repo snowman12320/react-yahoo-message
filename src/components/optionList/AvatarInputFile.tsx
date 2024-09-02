@@ -37,9 +37,9 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
 
   return (
     <>
-      <div className="absolute inset-0 hidden size-full group-hover:grid backdrop-blur-sm rounded-full">
+      <div className="absolute inset-0 hidden size-full rounded-full backdrop-blur-sm group-hover:grid">
         <Input
-          className=" hover:cursor-pointer z-1 w-full h-full opacity-0 "
+          className=" z-1 size-full opacity-0 hover:cursor-pointer "
           id="picture"
           type="file"
           accept="image/*"
@@ -49,17 +49,17 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
         />
         <Upload
           color="white"
-          className="size-10 absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"
+          className="pointer-events-none absolute inset-1/2 z-0 size-10 -translate-x-1/2 -translate-y-1/2"
         />
       </div>
 
       <div
-        className={`absolute inset-0  size-full  backdrop-blur-sm rounded-full  ${isAvatarLoading ? 'block' : 'hidden'}`}
+        className={`absolute inset-0  size-full  rounded-full backdrop-blur-sm  ${isAvatarLoading ? 'block' : 'hidden'}`}
       >
         <div className="absolute inset-[35%]">
           <Loader2
             color="white"
-            className="size-10   animate-spin z-0 pointer-events-none"
+            className="pointer-events-none   z-0 size-10 animate-spin"
           />
         </div>
       </div>

@@ -6,13 +6,13 @@ function ErrorPage() {
   console.error(error);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex h-screen flex-col items-center justify-center">
       <img
         src={logo}
         alt="logo"
-        className="size-20 object-contain mx-auto"
+        className="mx-auto size-20 object-contain"
       />
-      <h1 className="text-2xl  text-red-500 font-bold sm:text-4xl ">
+      <h1 className="text-2xl  font-bold text-red-500 sm:text-4xl ">
         404 Not Found
       </h1>
       <p className="text-sm">

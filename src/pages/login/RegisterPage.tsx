@@ -3,12 +3,12 @@ import logout from '@/assets/images/logos/logout.png';
 
 function RegisterPage() {
   return (
-    <section className="grid place-items-center h-[95vh]">
+    <section className="grid h-[95vh] place-items-center">
       <div>
         <img
           src={logout}
           alt="logout"
-          className="w-auto h-32 m-auto"
+          className="m-auto h-32 w-auto"
         />
         <RegisterForm />
       </div>

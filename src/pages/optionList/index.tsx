@@ -34,10 +34,10 @@ export default function OptionList() {
   }, [memoizedSetCurrentUser]);
 
   return (
-    <div className="container space-y-3 relative">
+    <div className="container relative space-y-3">
       {/* 頭像區 */}
-      <section className="flex gap-6 py-3 justify-between">
-        <div className="flex-none size-32  grid place-content-center border overflow-hidden rounded-full relative group ">
+      <section className="flex justify-between gap-6 py-3">
+        <div className="group relative  grid size-32 flex-none place-content-center overflow-hidden rounded-full border ">
           <img
             src={getCurrentUser()?.photo || defaultAvatar}
             alt="user avatar"
@@ -49,8 +49,8 @@ export default function OptionList() {
           <AvatarInputFile currentUser={getCurrentUser()} />
         </div>
 
-        <div className="flex flex-col gap-3 justify-around w-full">
-          <div className="flex items-center gap-3 justify-around flex-1 ">
+        <div className="flex w-full flex-col justify-around gap-3">
+          <div className="flex flex-1 items-center justify-around gap-3 ">
             <span
               className={`inline-block size-4 rounded-full ${getStatusColor(getCurrentUser()?.onlineStatus)}`}
             />
@@ -64,12 +64,12 @@ export default function OptionList() {
 
           <MessageBoard currentUser={getCurrentUser()} />
 
-          <div className="flex gap-3 justify-between items-center">
-            <div className="flex gap-3 items-center">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
               <AddFriendDialog />
-              <Mail className="cursor-pointer size-6" />
+              <Mail className="size-6 cursor-pointer" />
               <Settings
-                className="cursor-pointer size-6"
+                className="size-6 cursor-pointer"
                 onClick={() => {
                   toast({
                     description: '功能開發中',
@@ -81,7 +81,7 @@ export default function OptionList() {
 
             <LogoutBtn
               buttonText=""
-              className="cursor-pointer size-6"
+              className="size-6 cursor-pointer"
             />
           </div>
         </div>

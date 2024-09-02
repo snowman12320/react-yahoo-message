@@ -119,7 +119,7 @@ export function LoginForm() {
             control={loginForm.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>登入帳號</FormLabel>
                 <FormControl>
                   <Input
@@ -138,7 +138,7 @@ export function LoginForm() {
             control={loginForm.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>登入密碼</FormLabel>
                 <FormControl>
                   <Input
@@ -153,7 +153,7 @@ export function LoginForm() {
             )}
           />
 
-          <div className="text-center win7">
+          <div className="win7 text-center">
             <Button
               className="button"
               type="submit"
@@ -162,7 +162,7 @@ export function LoginForm() {
             </Button>
           </div>
 
-          <div className="text-center win7">
+          <div className="win7 text-center">
             <Button
               className="button"
               type="button"

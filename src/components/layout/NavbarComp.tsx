@@ -34,16 +34,16 @@ export function NavbarComp() {
 
   return (
     <nav className="title-bar !p-4">
-      <div className="title-bar-text flex items-center gap-1">
+      <div className="title-bar-text  flex items-center gap-1">
         <img
           src={logo}
           className="size-6 object-contain"
           alt="logo"
         />
-        <p className="text-white flex">
+        <p className="flex text-white">
           Yahoo！即時通
-          <span className="text-white pl-2">{displayText}</span>
-          <span className="text-white pl-2">
+          <span className="pl-2 text-white">{displayText}</span>
+          <span className="pl-2 text-white">
             {getStatusText(getCurrentUser()?.onlineStatus)}
           </span>
         </p>
