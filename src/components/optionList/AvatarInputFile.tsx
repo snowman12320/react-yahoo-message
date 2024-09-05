@@ -39,10 +39,10 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
     <>
       <div className="absolute inset-0 hidden size-full rounded-full backdrop-blur-sm group-hover:grid">
         <Input
-          className=" z-1 size-full opacity-0 hover:cursor-pointer "
+          className="z-1 size-full opacity-0 hover:cursor-pointer"
           id="picture"
           type="file"
-          accept="image/*"
+          accept="image/jpeg, image/png, image/jpg"
           onChange={e => {
             handUploadProfilePhoto(e.target.files?.[0]);
           }}
