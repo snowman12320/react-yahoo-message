@@ -1,4 +1,4 @@
-import tailwindAnimate from 'tailwindcss-animate'
+import tailwindAnimate from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -47,6 +47,7 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        lineColor: '#07c756',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -70,4 +71,4 @@ export default {
     },
   },
   plugins: [tailwindAnimate],
-}
+};
