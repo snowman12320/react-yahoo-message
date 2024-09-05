@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { SiLine } from 'react-icons/si';
 
 import {
   Accordion,
@@ -38,7 +39,7 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
           {filteredFriends.map(friend => (
             <section
               key={friend._id}
-              className="flex cursor-pointer gap-5 px-3 py-2 hover:bg-gray-100"
+              className="relative flex cursor-pointer gap-5 px-3 py-2 hover:bg-gray-100"
             >
               <img
                 src={friend.photo || tempAvatar}
@@ -49,7 +50,8 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
               <div className="flex w-full flex-col gap-1">
                 <div className="flex flex-1 items-center justify-start gap-3">
                   <span
-                    className={`inline-block size-2 rounded-full ${getStatusColor(friend?.onlineStatus)}`}
+                    className={`inline-block size-2 rounded-full 
+                      ${getStatusColor(friend?.onlineStatus)}`}
                   />
                   <p>{friend.name}</p>
                 </div>
@@ -72,7 +74,11 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
                 </div>
               </div>
 
-              <ChatButton friendId={friend._id} />
+              <ChatButton friend={friend} />
+              <SiLine
+                className="absolute right-10 top-1/2 size-6
+              -translate-y-1/2 fill-lineColor"
+              />
             </section>
           ))}
         </AccordionContent>
