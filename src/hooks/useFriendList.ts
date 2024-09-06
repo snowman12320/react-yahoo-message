@@ -2,18 +2,24 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '@/app/store';
 import { setFriendList } from '@/features/friendListSlice';
-import { fetchFriendList } from '@/api';
+import { fetchFriendList as fetchFriendListApi } from '@/api';
 
 export function useFriendList() {
   const dispatch = useDispatch();
-  const friendList = useSelector((state: RootState) => state.friendList.friends);
+  const friendList = useSelector(
+    (state: RootState) => state.friendListReducer.friendList,
+  );
 
-  const updateFriendList = async () => {
+  const fetchFriendList = async () => {
     const {
       data: { friends },
-    } = await fetchFriendList();
+    } = await fetchFriendListApi();
     dispatch(setFriendList(friends));
   };
 
-  return { friendList, updateFriendList };
+  const updateFriendList = async () => {
+    dispatch(setFriendList(friendList));
+  };
+
+  return { friendList, fetchFriendList, updateFriendList };
 }

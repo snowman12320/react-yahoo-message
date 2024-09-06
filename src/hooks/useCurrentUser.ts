@@ -6,7 +6,7 @@ import { Profile } from '@/types';
 
 export function useCurrentUser() {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const currentUser = useSelector((state: RootState) => state.userReducer.currentUser);
 
   const getCurrentUser = () => {
     if (currentUser) {
