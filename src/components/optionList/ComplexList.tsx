@@ -13,10 +13,10 @@ import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 
 export function ComplexList({ searchTerm }: { searchTerm: string }) {
   const { getStatusColor } = useCurrentUser();
-  const { friendList, updateFriendList } = useFriendList();
+  const { friendList, fetchFriendList } = useFriendList();
 
   useEffect(() => {
-    updateFriendList();
+    fetchFriendList();
   }, []);
 
   const filteredFriends = useMemo(
@@ -47,7 +47,7 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
                 className="size-14 flex-none rounded-lg bg-slate-400 object-cover"
               />
 
-              <div className="flex w-full flex-col gap-1">
+              <div className="flex w-full flex-col gap-1 pr-16">
                 <div className="flex flex-1 items-center justify-start gap-3">
                   <span
                     className={`inline-block size-2 rounded-full 
@@ -55,25 +55,23 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
                   />
                   <p>{friend.name}</p>
                 </div>
-
-                <div className="flex flex-1 items-center justify-between gap-3">
-                  <p>
-                    {friend.messageBoard.startsWith('http') ? (
-                      <a
-                        href={friend.messageBoard}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-500"
-                      >
-                        {friend.messageBoard}
-                      </a>
-                    ) : (
-                      friend.messageBoard
-                    )}
-                  </p>
-                </div>
+                <div className="flex-1" />
               </div>
 
+              <p className="absolute  right-[22%] top-[45%] z-10 w-[200px]">
+                {friend.messageBoard.startsWith('http') ? (
+                  <a
+                    href={friend.messageBoard}
+                    target="_blank"
+                    rel="noreferrer"
+                    className=" text-blue-500 hover:underline"
+                  >
+                    {friend.messageBoard}
+                  </a>
+                ) : (
+                  friend.messageBoard
+                )}
+              </p>
               <ChatButton friend={friend} />
               <SiLine
                 className="absolute right-10 top-1/2 size-6

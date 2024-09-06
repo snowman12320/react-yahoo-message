@@ -39,7 +39,7 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
     <>
       <div className="absolute inset-0 hidden size-full rounded-full backdrop-blur-sm group-hover:grid">
         <Input
-          className="z-1 size-full opacity-0 hover:cursor-pointer"
+          className=" h-full opacity-0 hover:cursor-pointer"
           id="picture"
           type="file"
           accept="image/jpeg, image/png, image/jpg"
@@ -49,7 +49,7 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
         />
         <Upload
           color="white"
-          className="pointer-events-none absolute inset-1/2 z-0 size-10 -translate-x-1/2 -translate-y-1/2"
+          className="pointer-events-none absolute inset-1/2  size-10 -translate-x-1/2 -translate-y-1/2"
         />
       </div>
 
