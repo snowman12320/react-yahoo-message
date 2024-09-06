@@ -17,9 +17,5 @@ export function useFriendList() {
     dispatch(setFriendList(friends));
   };
 
-  const updateFriendList = async () => {
-    dispatch(setFriendList(friendList));
-  };
-
-  return { friendList, fetchFriendList, updateFriendList };
+  return { friendList, fetchFriendList };
 }

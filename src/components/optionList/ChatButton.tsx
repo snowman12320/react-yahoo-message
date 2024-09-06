@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   Drawer,
@@ -11,50 +11,20 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Button, MessageList } from '@/components';
-import { useWsFunc, useCurrentUser } from '@/hooks';
-import { KEY_TOKEN, getFromStorage } from '@/api/storage-management';
-import { FriendListResponse, MessageListType } from '@/types';
+import { useWsFunc, useCurrentUser, useMessageList } from '@/hooks';
+import { FriendListResponse } from '@/types';
 
 export function ChatButton({ friend }:{ friend: FriendListResponse[0] }) {
-  const { onMounted, messageList } = useWsFunc();
+  const { sendMessage } = useWsFunc();
   const { getCurrentUser } = useCurrentUser();
   const currentUser = getCurrentUser();
-  const token = getFromStorage(KEY_TOKEN, 'SESSION');
-  const [handleMessageList, setHandleMessageList] = useState<MessageListType[] | undefined>();
   const [isOpen, setOpen] = useState(false);
-  const [isTimeOutOpen, setTimeOutOpen] = useState(false);
-
-  useEffect(() => {
-    async function handleOnMounted() {
-      if (token && isOpen) {
-        await onMounted(token);
-      }
-    }
-    handleOnMounted();
-  }, [token, isOpen]);
-
-  useEffect(() => {
-    setHandleMessageList(messageList);
-  }, [messageList]);
-
-  useEffect(
-    () => {
-      if (isOpen) {
-        setTimeout(() => {
-          setTimeOutOpen(true);
-        }, 1000);
-      }
-
-      if (!isOpen && isTimeOutOpen) {
-        setTimeOutOpen(false);
-      }
-    },
-    [isOpen],
-  );
+  const [inputMessage, setInputMessage] = useState('');
+  const { messageList } = useMessageList();
 
   return (
-    <Drawer open={isTimeOutOpen} onOpenChange={setOpen}>
-      <DrawerTrigger className="absolute inset-0" />
+    <Drawer open={isOpen} onOpenChange={setOpen}>
+      <DrawerTrigger className="absolute inset-0 z-0" />
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{friend.name}</DrawerTitle>
@@ -64,12 +34,31 @@ export function ChatButton({ friend }:{ friend: FriendListResponse[0] }) {
 
         </DrawerHeader>
 
-        <MessageList messageList={handleMessageList} uuid={currentUser?._id} friend={friend} />
+        <MessageList messageList={messageList} uuid={currentUser?._id} friend={friend} />
 
         <DrawerFooter>
           <div className="flex h-[100px] gap-3">
-            <textarea className="size-full ring-1" />
-            <Button className="h-full flex-1">Submit</Button>
+            {inputMessage}
+            <textarea
+              className="size-full ring-1"
+              onChange={
+              e => {
+                setInputMessage(e.target.value);
+              }
+            }
+            />
+            <Button
+              onClick={
+              () => sendMessage({
+                message: inputMessage,
+                from: currentUser?._id,
+                toID: friend._id,
+              })
+            }
+              className="h-full flex-1"
+            >
+              Submit
+            </Button>
           </div>
           <DrawerClose onClick={() => setOpen(!isOpen)}>
             Cancel

@@ -20,7 +20,7 @@ import { addFriend } from '@/api';
 
 export function AddFriendDialog() {
   const { getCurrentUser } = useCurrentUser();
-  const { updateFriendList } = useFriendList();
+  const { fetchFriendList } = useFriendList();
   const [isCopied, setIsCopied] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [inputCode, setInputCode] = useState('');
@@ -49,7 +49,7 @@ export function AddFriendDialog() {
 
     try {
       res = await addFriend(inputCode);
-      await updateFriendList();
+      await fetchFriendList();
     } catch (err) {
       console.error('addFriend: ', err);
       res.message = (err as Error).message;

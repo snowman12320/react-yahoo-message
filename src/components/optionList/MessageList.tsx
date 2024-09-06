@@ -16,6 +16,7 @@ export function MessageList({ messageList, uuid, friend }: MessageListProps) {
           key={item.id}
           className={`mb-2 ${item?.uuid === uuid ? 'text-end' : ''}`}
         >
+          {item.id}
           <div
             className={`flex justify-start ${item?.uuid === uuid ? 'flex-row-reverse gap-3' : ''}`}
           >
@@ -30,6 +31,7 @@ export function MessageList({ messageList, uuid, friend }: MessageListProps) {
             <div>
               <p>{uuid}</p>
               <p>{item?.toId}</p>
+              <p>{item?.content}</p>
               <p className="text-B4 text-gray-400">
                 {new Date(item?.createdAt).toLocaleTimeString()}
               </p>

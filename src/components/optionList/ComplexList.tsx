@@ -8,15 +8,17 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { ChatButton } from '@/components';
-import { useFriendList, useCurrentUser } from '@/hooks';
+import { useFriendList, useCurrentUser, useMessageList } from '@/hooks';
 import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 
 export function ComplexList({ searchTerm }: { searchTerm: string }) {
   const { getStatusColor } = useCurrentUser();
   const { friendList, fetchFriendList } = useFriendList();
+  const { fetchMessageList } = useMessageList();
 
   useEffect(() => {
     fetchFriendList();
+    fetchMessageList();
   }, []);
 
   const filteredFriends = useMemo(
