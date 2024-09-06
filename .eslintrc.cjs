@@ -29,5 +29,6 @@ module.exports = {
     'tailwindcss/classnames-order': 2,
     'tailwindcss/no-custom-classname': 0,
     'tw/no-contradicting-classname': 0,
+    'max-len': [0],
   },
 };
