@@ -18,14 +18,18 @@ export function useWsFunc() {
 
   let host = '';
   let ws: WebSocket | null = null;
+  let isWsInitialized = false;
 
   const initializeWebSocket = () => {
+    if (isWsInitialized) return;
+
     host = `ws://localhost:3001/ws?token=${fromToken}`;
     // host = `wss://one04social-back-end.onrender.com/ws?token=${token}`;
 
     ws = new WebSocket(host);
     ws.onopen = () => {
       console.info('前端 WS connection opened');
+      isWsInitialized = true;
     };
     ws.onerror = error => {
       console.error('前端 WS error:', error);
@@ -33,6 +37,7 @@ export function useWsFunc() {
     ws.onclose = () => {
       console.info('前端 WS connection closed');
       ws = null;
+      isWsInitialized = false;
     };
   };
 
@@ -40,7 +45,7 @@ export function useWsFunc() {
   let name = '';
 
   const messageRef = null;
-  let messageListInit: MessageListType[] = [];
+  let messageListHistory: MessageListType[] = [];
 
   const inviteList: inviteListType[] = [];
 
@@ -62,9 +67,9 @@ export function useWsFunc() {
       }
 
       if (msgData.context === 'message') {
-        messageListInit = [...messageListInit];
-        messageListInit.push(msgData);
-        dispatch(setMessageList(messageListInit));
+        messageListHistory = [...messageListHistory];
+        messageListHistory.push(msgData);
+        dispatch(setMessageList(messageListHistory));
       }
 
       if (msgData.context === 'invite') {
@@ -86,7 +91,10 @@ export function useWsFunc() {
 
   // 觸發後端WS
   const sendMessage = async ({ message, from, toID }: sendMessageType) => {
-    await initializeWebSocket();
+    if (!isWsInitialized) {
+      initializeWebSocket();
+    }
+
     if (!ws) {
       console.error('WebSocket is not initialized.');
       return;
@@ -103,6 +111,7 @@ export function useWsFunc() {
       );
     };
 
+    // setInputMessage('');
     // message = '';
     // scrollToBottom();
   };
@@ -136,7 +145,7 @@ export function useWsFunc() {
   return {
     uuid,
     name,
-    messageListInit,
+    messageListHistory,
     messageRef,
     inviteList,
 

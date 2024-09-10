@@ -48,6 +48,7 @@ export function ChatButton({ friend }:{ friend: FriendListResponse[0] }) {
             }
             />
             <Button
+              type="button"
               onClick={
               () => sendMessage({
                 message: inputMessage,
