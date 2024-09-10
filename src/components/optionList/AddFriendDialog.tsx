@@ -1,7 +1,8 @@
 import {
-  Copy, Plus, Check, Loader2,
+  Copy, Plus, Check, Loader2, Share2,
 } from 'lucide-react';
 import React, { useState } from 'react';
+import liff from '@line/liff';
 
 import {
   Button,
@@ -68,6 +69,31 @@ export function AddFriendDialog() {
     handleSubmit(event as unknown as React.FormEvent<HTMLFormElement>);
   };
 
+  const handleShareClick = async () => {
+    const textContent = `邀請您加入我的 YahooMessage 好友列表，
+邀請碼：${getCurrentUser()?._id}
+
+請點擊以下 LIFF 瀏覽器連結，
+開啟 YahooMessage（建議使用手機版），
+（https://liff.line.me/2006148994-OaYeD74K）
+並輸入邀請碼即可加入我的好友列表。`;
+
+    try {
+      await liff.shareTargetPicker([
+        {
+          type: 'text',
+          text: textContent,
+        },
+      ]);
+    } catch (error) {
+      console.error('Error sharing target picker:', error);
+      toast({
+        description: '需登入 LINE 會員 後才能分享',
+        variant: 'error',
+      });
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -88,7 +114,7 @@ export function AddFriendDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-5 flex items-center space-x-2">
+        <div className="mt-5 flex items-center">
           <div className="relative grid flex-1 gap-2">
             <Label
               htmlFor="inviteCode"
@@ -116,10 +142,20 @@ export function AddFriendDialog() {
               <Copy className="size-4" />
             )}
           </Button>
+
+          <Button
+            type="button"
+            size="sm"
+            onClick={handleShareClick}
+          >
+            <Share2
+              className="size-4"
+            />
+          </Button>
         </div>
 
-        <div className="mt-5 flex items-center space-x-2">
-          <div className="relative grid flex-1 gap-2">
+        <div className="mt-5 flex items-center justify-start">
+          <div className="relative grid flex-none gap-2">
             <Label
               htmlFor="inputCode"
               className="absolute -top-5 left-0"
@@ -127,7 +163,7 @@ export function AddFriendDialog() {
               輸入邀約碼
             </Label>
             <Input
-              className="inline-block"
+              className="inline-block w-[170px]"
               type="text"
               id="inputCode"
               placeholder="輸入對方邀約碼"
@@ -139,7 +175,6 @@ export function AddFriendDialog() {
           <Button
             type="submit"
             size="sm"
-            className="px-3"
             disabled={isAdding || !inputCode}
             onClick={handleButtonClick}
           >
