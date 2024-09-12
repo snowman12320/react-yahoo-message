@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import liff from '@line/liff';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';

@@ -30,5 +30,6 @@ module.exports = {
     'tailwindcss/no-custom-classname': 0,
     'tw/no-contradicting-classname': 0,
     'max-len': [0],
+    'import/no-extraneous-dependencies': 0,
   },
 };

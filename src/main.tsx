@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import liff from '@line/liff';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
