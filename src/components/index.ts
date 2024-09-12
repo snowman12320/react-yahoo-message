@@ -21,5 +21,5 @@ export * from '@/components/optionList/AddFriendDialog';
 export * from '@/components/optionList/MessageBoard';
 export * from '@/components/optionList/StatusGroup';
 export * from '@/components/optionList/AvatarInputFile';
-export * from '@/components/optionList/ChatButton';
+export * from '@/components/optionList/ChatRoom.tsx';
 export * from '@/components/optionList/MessageList';
