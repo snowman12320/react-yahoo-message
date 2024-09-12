@@ -23,7 +23,7 @@ export function AvatarInputFile({ currentUser }: { currentUser: Profile }) {
         const { src } = res.data as unknown as { src: string };
         setCurrentUser({ ...currentUser, photo: src });
       } catch (error) {
-        console.error('uploadProfilePhoto: ', error);
+        console.error('😅 uploadProfilePhoto: ', error);
         res.message = (error as Error).message;
       } finally {
         setAvatarLoading(false);

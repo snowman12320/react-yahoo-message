@@ -32,7 +32,7 @@ export function useWsFunc() {
       isWsInitialized = true;
     };
     ws.onerror = error => {
-      console.error('前端 WS error:', error);
+      console.error('😅 前端 WS error:', error);
     };
     ws.onclose = () => {
       console.info('前端 WS connection closed');
@@ -54,7 +54,7 @@ export function useWsFunc() {
     await initializeWebSocket();
 
     if (!ws) {
-      console.error('WebSocket is not initialized.');
+      console.error('😅 WebSocket is not initialized.');
       return;
     }
 
@@ -96,7 +96,7 @@ export function useWsFunc() {
     }
 
     if (!ws) {
-      console.error('WebSocket is not initialized.');
+      console.error('😅 WebSocket is not initialized.');
       return;
     }
 
@@ -130,7 +130,7 @@ export function useWsFunc() {
     // eslint-disable-next-line
     const to = prompt('請輸入要邀請的用戶 ID');
     if (!ws) {
-      console.error('WebSocket is not initialized.');
+      console.error('😅 WebSocket is not initialized.');
       return;
     }
 

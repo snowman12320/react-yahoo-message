@@ -38,7 +38,7 @@ export function AddFriendDialog() {
           setTimeout(() => setIsCopied(false), 2000);
         })
         .catch(err => {
-          console.error('Failed to copy: ', err);
+          console.error('😅 Failed to copy: ', err);
         });
     }
   };
@@ -52,7 +52,7 @@ export function AddFriendDialog() {
       res = await addFriend(inputCode);
       await fetchFriendList();
     } catch (err) {
-      console.error('addFriend: ', err);
+      console.error('😅 addFriend: ', err);
       res.message = (err as Error).message;
     } finally {
       setInputCode('');
@@ -86,7 +86,7 @@ export function AddFriendDialog() {
         },
       ]);
     } catch (error) {
-      console.error('Error sharing target picker:', error);
+      console.error('😅 Error sharing target picker:', error);
       toast({
         description: '需登入 LINE 會員 後才能分享',
         variant: 'error',

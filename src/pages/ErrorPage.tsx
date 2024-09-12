@@ -3,7 +3,7 @@ import logo from '@/assets/images/logos/logout.png';
 
 function ErrorPage() {
   const error = useRouteError();
-  console.error(error);
+  console.error(`😅 ErrorPage: ${error}`);
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
