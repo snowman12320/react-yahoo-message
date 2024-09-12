@@ -18,7 +18,7 @@ import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
   const { setCurrentUser, getCurrentUser, getStatusColor } = useCurrentUser();
-  const [searchTerm, setSearchTerm] = useState(''); // 新增
+  const [searchTerm, setSearchTerm] = useState('');
 
   const memoizedSetCurrentUser = useCallback((user: Profile) => {
     setCurrentUser(user);

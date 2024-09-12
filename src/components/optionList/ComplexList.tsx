@@ -74,12 +74,18 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
                   friend.messageBoard
                 )}
               </p>
+
               <ChatRoom friend={friend} />
+
               <SiLine
-                className="absolute right-10 top-1/2 size-6
+                className="absolute right-10 top-1/2 size-4
               -translate-y-1/2 fill-lineColor"
                 title="透過 Line 聊天室通訊"
               />
+
+              <span className="absolute flex size-4 items-center  justify-center rounded-full bg-red-500 text-center text-white">
+                {1}
+              </span>
             </section>
           ))}
         </AccordionContent>

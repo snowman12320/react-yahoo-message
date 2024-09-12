@@ -43,6 +43,7 @@ export function ChatRoom({ friend }:{ friend: FriendListResponse[0] }) {
             />
             <span>{friend.name}</span>
           </DrawerTitle>
+
           <DrawerDescription>
             {friend?.messageBoard?.startsWith('https') ? (
               <a
@@ -63,7 +64,6 @@ export function ChatRoom({ friend }:{ friend: FriendListResponse[0] }) {
               </p>
             )}
           </DrawerDescription>
-
         </DrawerHeader>
 
         <MessageList messageList={messageList} uuid={currentUser?._id} friend={friend} />

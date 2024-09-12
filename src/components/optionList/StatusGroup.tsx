@@ -15,6 +15,12 @@ import {
 import { updateProfile } from '@/api';
 import { toast } from '../ui/use-toast';
 
+const statusOptions = [
+  { value: 'online', label: '上線', className: 'fill-yellow-300 text-yellow-300 hover:!text-yellow-300' },
+  { value: 'busy', label: '忙碌', className: 'fill-red-500 text-red-500 hover:!text-red-500' },
+  { value: 'offline', label: '離線', className: 'fill-gray-300 text-gray-300 hover:!text-gray-300' },
+];
+
 export function StatusGroup() {
   const { setCurrentUser, getCurrentUser } = useCurrentUser();
   const currentUser = getCurrentUser();
@@ -60,24 +66,11 @@ export function StatusGroup() {
             updateStatus(newStatus);
           }}
         >
-          <DropdownMenuRadioItem
-            className="fill-yellow-300 text-yellow-300 hover:!text-yellow-300"
-            value="online"
-          >
-            上線
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem
-            className="fill-red-500 text-red-500 hover:!text-red-500"
-            value="busy"
-          >
-            忙碌
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem
-            className="fill-gray-300 text-gray-300 hover:!text-gray-300"
-            value="offline"
-          >
-            離線
-          </DropdownMenuRadioItem>
+          {statusOptions.map(({ value, label, className }) => (
+            <DropdownMenuRadioItem key={value} value={value} className={className}>
+              {label}
+            </DropdownMenuRadioItem>
+          ))}
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
