@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { ChatButton } from '@/components';
+import { ChatRoom } from '@/components';
 import { useFriendList, useCurrentUser, useMessageList } from '@/hooks';
 import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 
@@ -46,7 +46,7 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
               <img
                 src={friend.photo || tempAvatar}
                 alt="friend avatar"
-                className="size-14 flex-none rounded-lg bg-slate-400 object-cover"
+                className="size-14 flex-none rounded-full bg-slate-400 object-cover"
               />
 
               <div className="flex w-full flex-col gap-1 pr-16">
@@ -74,10 +74,11 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
                   friend.messageBoard
                 )}
               </p>
-              <ChatButton friend={friend} />
+              <ChatRoom friend={friend} />
               <SiLine
                 className="absolute right-10 top-1/2 size-6
               -translate-y-1/2 fill-lineColor"
+                title="透過 Line 聊天室通訊"
               />
             </section>
           ))}
