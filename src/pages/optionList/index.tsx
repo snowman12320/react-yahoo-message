@@ -1,72 +1,75 @@
-import { useEffect, useState } from 'react';
-import {
-  Mail, Loader2, Settings,
-} from 'lucide-react';
+import { useEffect, useCallback, useState } from 'react';
+import { Mail, Settings } from 'lucide-react';
 
+import {
+  AddFriendDialog,
+  AvatarInputFile,
+  MessageBoard,
+  StatusGroup,
+  ComplexList,
+  LogoutBtn,
+  Input,
+  toast,
+} from '@/components';
 import { useCurrentUser } from '@/hooks';
-import { LogoutBtn } from '@/components/login/LogoutBtn';
-import { Input } from '@/components/ui/input';
-import { StatusGroup } from '@/components/optionList/StatusGroup';
-import ComplexList from '@/components/optionList/ComplexList';
-import { useToast } from '@/components/ui/use-toast';
-import { AddFriendDialog } from '@/components/';
+import { fetchUser } from '@/api';
+import { Profile } from '@/types';
+import defaultAvatar from '@/assets/images/user/defaultAvatar.webp';
 
 export default function OptionList() {
-  const currentUser = useCurrentUser();
-  const [showImage, setShowImage] = useState(false);
-  const { toast } = useToast();
+  const { setCurrentUser, getCurrentUser, getStatusColor } = useCurrentUser();
+  const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowImage(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+  const memoizedSetCurrentUser = useCallback((user: Profile) => {
+    setCurrentUser(user);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetchUser();
+      memoizedSetCurrentUser(res.data as unknown as Profile);
+    };
+
+    fetchData();
+  }, [memoizedSetCurrentUser]);
+
   return (
-    <div className="container space-y-3 relative">
+    <div className="container relative space-y-3">
       {/* 頭像區 */}
-      <section className="flex gap-6 py-3 justify-between">
-        <div className="flex-none size-32  grid place-content-center border overflow-hidden">
-          {showImage ? (
-            <img
-              src={currentUser?.photo}
-              alt="user avatar"
-              className="size-full object-cover"
-            />
-          ) : (
-            <Loader2 className="size-5 animate-spin" />
-          )}
+      <section className="flex justify-between gap-6 py-3">
+        <div className="group relative  grid size-32 flex-none place-content-center overflow-hidden rounded-full border ">
+          <img
+            src={getCurrentUser()?.photo || defaultAvatar}
+            alt="user avatar"
+            className="size-full object-cover"
+            onError={e => {
+              e.currentTarget.src = defaultAvatar;
+            }}
+          />
+          <AvatarInputFile currentUser={getCurrentUser()} />
         </div>
 
-        <div className="flex flex-col gap-3 justify-around w-full">
-          <div className="flex items-center gap-3 justify-around flex-1 ">
-            <span className="inline-block size-2 rounded-full bg-black " />
+        <div className="flex w-full flex-col justify-around gap-3">
+          <div className="flex flex-1 items-center justify-around gap-3 ">
+            <span
+              className={`inline-block size-4 rounded-full ${getStatusColor(getCurrentUser()?.onlineStatus)}`}
+            />
             <h2 className="text-base font-bold">
-              {currentUser ? (
-                <p>{currentUser.name}</p>
-              ) : (
-                <p>No user logged in</p>
-              )}
+              <p>{getCurrentUser()?.name || 'No user'}</p>
             </h2>
             <div className="yahoo-btn-cls">
               <StatusGroup />
             </div>
           </div>
 
-          <Input
-            type="text"
-            placeholder="你在做什麼？"
-            className="rounded-md inline-block"
-          />
+          <MessageBoard currentUser={getCurrentUser()} />
 
-          <div className="flex gap-3 justify-between items-center">
-            <div className="flex gap-3 items-center">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
               <AddFriendDialog />
-              <Mail className="cursor-pointer size-6" />
+              <Mail className="size-6 cursor-pointer" />
               <Settings
-                className="cursor-pointer size-6"
+                className="size-6 cursor-pointer"
                 onClick={() => {
                   toast({
                     description: '功能開發中',
@@ -78,7 +81,7 @@ export default function OptionList() {
 
             <LogoutBtn
               buttonText=""
-              className="cursor-pointer size-6"
+              className="size-6 cursor-pointer"
             />
           </div>
         </div>
@@ -90,11 +93,12 @@ export default function OptionList() {
           type="text"
           placeholder="搜尋好友"
           className="rounded-md"
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </section>
 
-      {/* 列表 */}
-      <ComplexList />
+      {/* 複合列表 */}
+      <ComplexList searchTerm={searchTerm} />
     </div>
   );
 }

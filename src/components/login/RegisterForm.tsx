@@ -1,11 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch } from 'react-redux';
 
-import { useIsLoading } from '@/hooks';
-import { setLoading } from '@/features/loadingSlice';
+import { useLoading } from '@/hooks';
 import { useForm, DevTool } from '@/core/form';
 import { useNavigate, Link } from '@/core/router';
-import { RegisterFormValues } from '@/types/';
+import { RegisterFormValues } from '@/types';
 import {
   Button,
   Input,
@@ -18,15 +16,15 @@ import {
   RadioGroup,
   RadioGroupItem,
   Label,
-} from '@/components/';
+} from '@/components';
 import { register } from '@/api/user.api';
 import { REGISTRATION_SCHEMA } from '@/constants';
 import { useToast } from '@/components/ui/use-toast';
 
 export function RegisterForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isLoading = useIsLoading();
+  const { getIsLoading, setLoading } = useLoading();
+  const isLoading = getIsLoading();
   const { toast } = useToast();
 
   const registerForm = useForm({
@@ -42,7 +40,7 @@ export function RegisterForm() {
 
   async function submitRegister(values: RegisterFormValues) {
     try {
-      dispatch(setLoading(true));
+      setLoading(true);
       const res = await register(values);
 
       if (res.status === 'success') {
@@ -61,7 +59,7 @@ export function RegisterForm() {
         });
       }
     } finally {
-      dispatch(setLoading(false));
+      setLoading(false);
     }
   }
 
@@ -76,7 +74,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>信箱帳號</FormLabel>
                 <FormControl>
                   <Input
@@ -95,7 +93,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>註冊密碼</FormLabel>
                 <FormControl>
                   <Input
@@ -114,7 +112,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="confirmPassword"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>確認密碼</FormLabel>
                 <FormControl>
                   <Input
@@ -134,7 +132,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>用戶名稱</FormLabel>
                 <FormControl>
                   <Input
@@ -154,7 +152,7 @@ export function RegisterForm() {
             control={registerForm.control}
             name="gender"
             render={({ field }) => (
-              <FormItem className="w-[200px] mx-auto">
+              <FormItem className="mx-auto w-[200px]">
                 <FormLabel>用戶性別</FormLabel>
                 <FormControl>
                   <RadioGroup
@@ -162,21 +160,21 @@ export function RegisterForm() {
                     defaultValue={field.value}
                     className={`flex ${isLoading ? 'hidden' : ''}`}
                   >
-                    <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <div className="yahoo-btn-cls flex items-center space-x-2">
                       <RadioGroupItem
                         value="male"
                         id="male"
                       />
                       <Label htmlFor="male">男</Label>
                     </div>
-                    <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <div className="yahoo-btn-cls flex items-center space-x-2">
                       <RadioGroupItem
                         value="female"
                         id="female"
                       />
                       <Label htmlFor="female">女</Label>
                     </div>
-                    <div className="flex items-center space-x-2 yahoo-btn-cls">
+                    <div className="yahoo-btn-cls flex items-center space-x-2">
                       <RadioGroupItem
                         value="secret"
                         id="secret"

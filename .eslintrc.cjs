@@ -6,10 +6,11 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'airbnb',
     'airbnb/hooks',
+    'plugin:tailwindcss/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'tailwindcss'],
   rules: {
     'react-refresh/only-export-components': 0,
     'react/jsx-filename-extension': [
@@ -22,5 +23,13 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'no-console': [2, { allow: ['warn', 'error', 'info', 'dir'] }],
     'react/jsx-props-no-spreading': 0,
+    'react-hooks/exhaustive-deps': 0,
+    'arrow-parens': [2, 'as-needed'],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'tailwindcss/classnames-order': 2,
+    'tailwindcss/no-custom-classname': 0,
+    'tw/no-contradicting-classname': 0,
+    'max-len': [0],
+    'import/no-extraneous-dependencies': 0,
   },
 };

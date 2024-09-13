@@ -1,4 +1,8 @@
-import { KEY_TOKEN, storeInStorage, getFromStorage } from './storage-management.ts';
+import {
+  KEY_TOKEN,
+  storeInStorage,
+  getFromStorage,
+} from './storage-management.ts';
 
 /**
  * API 回應的格式
@@ -22,13 +26,22 @@ interface TokenResponse {
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /**
+ *  HTTP 請求的初始化設定
+ */
+export type RequestInit = {
+  method: HTTPMethod;
+  headers: Headers;
+  body?: string | FormData;
+};
+
+/**
  * 發送 HTTP 請求
  * @param method HTTP 請求的方法
  * @param url 要發送的請求的路徑
  * @param params 要傳送的參數
  * @returns
  */
-export const fetchData = async<T extends TokenResponse = TokenResponse> (
+export const fetchData = async <T extends TokenResponse = TokenResponse>(
   method: HTTPMethod,
   url: string,
   params?: unknown,
@@ -41,11 +54,24 @@ export const fetchData = async<T extends TokenResponse = TokenResponse> (
     headers.append('Authorization', `Bearer ${token}`);
   }
 
-  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}${url}`, {
+  const options: RequestInit = {
     method,
     headers,
-    body: params ? JSON.stringify(params) : undefined,
-  });
+  };
+
+  if (params) {
+    if (params instanceof FormData) {
+      options.body = params;
+      headers.delete('Content-Type');
+    } else {
+      options.body = JSON.stringify(params);
+    }
+  }
+
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_APP_API_URL}${url}`,
+    options,
+  );
 
   const result = (await response.json()) as APIResponseDTO<T>;
   if (result.status !== 'success') {
