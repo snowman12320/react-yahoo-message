@@ -1,45 +1,43 @@
-# React + Vite + TypeScript Template (react-vite-ui)
+# React Yahoo Messenger
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Dan5py/react-vite-ui/blob/main/LICENSE)
-
-A React + Vite template powered by shadcn/ui.
+A Yahoo Messenger simulation project built with React + Vite + TypeScript.
 
 ## 🎉 Features
 
 - **React** - A JavaScript library for building user interfaces.
-- **Vite** - A fast, opinionated frontend build tool.
+- **Vite** - A fast and flexible frontend build tool.
 - **TypeScript** - A typed superset of JavaScript that compiles to plain JavaScript.
 - **Tailwind CSS** - A utility-first CSS framework.
-- **Tailwind Prettier Plugin** - A Prettier plugin for formatting Tailwind CSS classes.
-- **ESLint** - A pluggable linting utility for JavaScript and TypeScript.
+- **ESLint** - A pluggable static code analysis tool for JavaScript and TypeScript.
 - **PostCSS** - A tool for transforming CSS with JavaScript.
-- **Autoprefixer** - A PostCSS plugin to parse CSS and add vendor prefixes.
+- **Autoprefixer** - A PostCSS plugin to parse CSS and add vendor prefixes automatically.
 - **shadcn/ui** - Beautifully designed components that you can copy and paste into your apps.
+- **LIFF (LINE Front-end Framework)** - A framework for developing web apps in LINE.
 
 ## ⚙️ Prerequisites
 
-Make sure you have the following installed on your development machine:
+Ensure you have the following installed on your development machine:
 
 - Node.js (version 16 or above)
 - pnpm (package manager)
 
 ## 🚀 Getting Started
 
-Follow these steps to get started with the react-vite-ui template:
+Follow these steps to get started with the React Yahoo Messenger template:
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/dan5py/react-vite-ui.git
+   git clone https://github.com/your-username/react-yahoo-message.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd react-vite-ui
+   cd react-yahoo-message
    ```
 
-3. Install the dependencies:
+3. Install dependencies:
 
    ```bash
    pnpm install
@@ -53,22 +51,23 @@ Follow these steps to get started with the react-vite-ui template:
 
 ## 📜 Available Scripts
 
-- pnpm dev - Starts the development server.
-- pnpm build - Builds the production-ready code.
-- pnpm lint - Runs ESLint to analyze and lint the code.
-- pnpm preview - Starts the Vite development server in preview mode.
+- `pnpm dev` - Starts the development server.
+- `pnpm build` - Builds production-ready code.
+- `pnpm lint` - Runs ESLint to analyze and check code.
+- `pnpm preview` - Starts the Vite development server in preview mode.
+- `pnpm deploy` - Deploys to GitHub Pages.
 
 ## 📂 Project Structure
 
 The project structure follows a standard React application layout:
 
-```python
-react-vite-ui/
+```
+react-yahoo-message/
   ├── node_modules/      # Project dependencies
   ├── public/            # Public assets
   ├── src/               # Application source code
   │   ├── components/    # React components
-  │   │   └── ui/        # shadc/ui components
+  │   │   └── ui/        # shadcn/ui components
   │   ├── styles/        # CSS stylesheets
   │   ├── lib/           # Utility functions
   │   ├── App.tsx        # Application entry point
@@ -80,7 +79,3 @@ react-vite-ui/
   ├── tsconfig.json      # TypeScript configuration
   └── vite.config.ts     # Vite configuration
 ```
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](https://choosealicense.com/licenses/mit/) file for details.
