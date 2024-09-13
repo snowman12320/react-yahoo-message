@@ -9,6 +9,7 @@ export * from '@/components/ui/toaster';
 export * from '@/components/ui/use-toast';
 export * from '@/components/ui/dialog';
 export * from '@/components/ui/textarea';
+export * from '@/components/ui/LoaderComp';
 
 export * from '@/components/layout/NavbarComp';
 

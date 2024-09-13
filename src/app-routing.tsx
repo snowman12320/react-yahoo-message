@@ -1,36 +1,38 @@
 import { createBrowserRouter } from 'react-router-dom';
-
-import ErrorPage from '@/pages/ErrorPage';
-import LogInPage from '@/pages/login/LogInPage';
-import Layout from '@/pages/Layout/Layout';
-import RegisterPage from '@/pages/login/RegisterPage';
-import OptionList from '@/pages/optionList';
+import { lazy, Suspense } from 'react'; // 引入 lazy 和 Suspense
+import { LoaderComp } from '@/components';
 
 import { notLoggedGuard, isLoggedGuard } from '@/api';
+
+const ErrorPage = lazy(() => import('@/pages/ErrorPage'));
+const LogInPage = lazy(() => import('@/pages/login/LogInPage'));
+const Layout = lazy(() => import('@/pages/Layout/Layout'));
+const RegisterPage = lazy(() => import('@/pages/login/RegisterPage'));
+const OptionList = lazy(() => import('@/pages/optionList'));
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
+    element: <Suspense fallback={<LoaderComp />}><Layout /></Suspense>,
+    errorElement: <Suspense fallback={<LoaderComp />}><ErrorPage /></Suspense>,
     children: [
       {
         path: '',
         loader: isLoggedGuard,
-        element: <LogInPage />,
+        element: <Suspense fallback={<LoaderComp />}><LogInPage /></Suspense>,
       },
       {
         path: 'login/RegisterPage',
-        element: <RegisterPage />,
+        element: <Suspense fallback={<LoaderComp />}><RegisterPage /></Suspense>,
       },
       {
         path: 'optionList/',
         loader: notLoggedGuard,
-        element: <OptionList />,
+        element: <Suspense fallback={<LoaderComp />}><OptionList /></Suspense>,
       },
       {
         path: '*',
-        element: <ErrorPage />,
+        element: <Suspense fallback={<LoaderComp />}><ErrorPage /></Suspense>,
       },
     ],
   },
