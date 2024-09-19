@@ -14,7 +14,7 @@ import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 export function ComplexList({ searchTerm }: { searchTerm: string }) {
   const { getStatusColor } = useCurrentUser();
   const { friendList, fetchFriendList } = useFriendList();
-  const { fetchMessageList } = useMessageList();
+  const { fetchMessageList, messageList } = useMessageList();
 
   useEffect(() => {
     fetchFriendList();
@@ -83,9 +83,12 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
                 title="透過 Line 聊天室通訊"
               />
 
-              <span className="absolute flex size-4 items-center  justify-center rounded-full bg-red-500 text-center text-white">
-                {1}
-              </span>
+              {/* 未讀訊息 */}
+              {messageList.filter(message => message.uuid === friend._id).length > 0 && (
+                <span className="absolute flex size-4 items-center justify-center rounded-full bg-red-500 text-center text-white">
+                  {messageList.filter(message => message.uuid === friend._id).length}
+                </span>
+              )}
             </section>
           ))}
         </AccordionContent>
