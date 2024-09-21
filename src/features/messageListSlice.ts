@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MessageListType } from '@/types';
 
-const messageList = [] as MessageListType[];
-
 const messageListSlice = createSlice({
   name: 'messageList',
-  initialState: messageList,
+  initialState: [] as MessageListType[],
   reducers: {
     setMessageList: (_state, action: PayloadAction<MessageListType[]>) => action.payload,
     updateMessageList: (

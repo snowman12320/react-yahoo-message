@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux';
 import { MessageListType } from '@/types';
 import { KEY_TOKEN, getFromStorage } from '@/api/storage-management';
 import { setMessageList, updateMessageList } from '@/features/messageListSlice';
-// import { useMessageList } from '@/hooks';
-// import { RootState } from '@/app/store';
 
 interface inviteListType {
   context: string;
@@ -17,15 +15,10 @@ interface inviteListType {
 export function useWsFunc() {
   const dispatch = useDispatch();
   const fromToken = getFromStorage(KEY_TOKEN, 'SESSION');
-  // const { messageList } = useMessageList();
-  // const messageList = useSelector(
-  //   (state: RootState) => state.messageListReducer.messageList,
-  // );
 
   let host = '';
   let ws: WebSocket | null = null;
   let isWsInitialized = false;
-  // const isFirstRender = true; // 定義 isFirstRender 變數
 
   const initializeWebSocket = () => {
     if (isWsInitialized) return;
@@ -56,7 +49,6 @@ export function useWsFunc() {
 
   const messageRef = null;
   let messageListHistory: MessageListType[] = [];
-  // console.info(messageListHistory); // [] 瘋狂重整 （載入 開啟 傳訊
 
   const inviteList: inviteListType[] = [];
 
@@ -71,7 +63,6 @@ export function useWsFunc() {
 
     ws.onmessage = res => {
       const msgData = JSON.parse(res.data);
-      // console.info('📩 message:', msgData);
 
       if (msgData.context === 'user') {
         uuid = msgData.uuid;
@@ -82,20 +73,6 @@ export function useWsFunc() {
         messageListHistory = [...messageListHistory, msgData];
         dispatch(setMessageList(messageListHistory));
       }
-
-      // if (msgData.context === 'message') {
-      //   console.info('📩 message: 222', messageListHistory);
-      //   messageListHistory = [...messageListHistory];
-      //   messageListHistory.push(msgData);
-      //   dispatch(setMessageList(messageListHistory));
-      // }
-
-      // if (msgData.context === 'read') {
-      //   messageListHistory = [...msgData.newMessageListHistory];
-      //   console.info('📩 message: 111', messageListHistory);
-      //   const updatedMessageList = [...msgData.newMessageListHistory, msgData];
-      //   dispatch(setMessageList(updatedMessageList));
-      // }
 
       if (msgData.context === 'read') {
         // 將所有消息標記為已讀
@@ -187,8 +164,6 @@ export function useWsFunc() {
       console.error('😅 WebSocket is not initialized.');
       return;
     }
-
-    // messageListHistory = newMessageListHistory;
 
     ws.onopen = () => {
       ws?.send(

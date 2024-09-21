@@ -8,7 +8,6 @@ export function useMessageList() {
   const dispatch = useDispatch();
   const { onMounted } = useWsFunc();
   const messageList = useSelector(
-    // (state: RootState) => state.messageListReducer.messageList,
     (state: RootState) => state.messageListReducer,
   );
 
@@ -17,7 +16,6 @@ export function useMessageList() {
   };
 
   const updateMessageList = (newMessage: MessageListType[]) => {
-    // dispatch(setMessageList([...messageList, newMessage]));
     dispatch(setMessageList(newMessage));
   };
 
