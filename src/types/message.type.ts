@@ -9,6 +9,7 @@ export type MessageListType = {
   photo: string;
   createdAt: string;
   toId: string;
+  isRead: boolean;
 };
 
 export type MessageListProps = {

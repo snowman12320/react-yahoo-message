@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Drawer,
@@ -15,12 +15,12 @@ import { useWsFunc, useCurrentUser, useMessageList } from '@/hooks';
 import { FriendListResponse } from '@/types';
 
 export function ChatRoom({ friend }:{ friend: FriendListResponse[0] }) {
-  const { sendMessage } = useWsFunc();
+  const { sendMessage, readMessage } = useWsFunc();
   const { getCurrentUser, getStatusColor } = useCurrentUser();
   const currentUser = getCurrentUser();
   const [isOpen, setOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
-  const { messageList } = useMessageList();
+  const { messageList, updateMessageList } = useMessageList();
 
   const handleSendMessage = (message: string) => {
     sendMessage({
@@ -29,6 +29,24 @@ export function ChatRoom({ friend }:{ friend: FriendListResponse[0] }) {
       toID: friend._id,
     });
   };
+
+  useEffect(() => {
+    const updateMessages = async () => {
+      if (isOpen) {
+        const updatedMessages = messageList.map(message => {
+          if (message.uuid === currentUser?._id || message.uuid === friend._id) {
+            return { ...message, isRead: true };
+          }
+          return message;
+        });
+
+        await updateMessageList(updatedMessages);
+        await readMessage({ from: friend._id, toID: currentUser?._id, newMessageListHistory: updatedMessages });
+      }
+    };
+
+    updateMessages();
+  }, [isOpen]);
 
   return (
     <Drawer open={isOpen} onOpenChange={setOpen}>
