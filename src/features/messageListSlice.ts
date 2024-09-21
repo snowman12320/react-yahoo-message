@@ -1,26 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MessageListType } from '@/types';
 
-interface MessageListState {
-  messageList: MessageListType[];
-}
-
-const initialState: MessageListState = {
-  messageList: [],
-};
+const messageList = [] as MessageListType[];
 
 const messageListSlice = createSlice({
   name: 'messageList',
-  initialState,
+  initialState: messageList,
   reducers: {
-    setMessageList(state, action: PayloadAction<MessageListType[]>) {
-      return {
-        ...state,
-        messageList: action.payload,
-      };
-    },
+    setMessageList: (_state, action: PayloadAction<MessageListType[]>) => action.payload,
+    updateMessageList: (
+      state,
+      action: PayloadAction<
+      // eslint-disable-next-line
+        (prevState: MessageListType[]) => MessageListType[]
+      >,
+    ) => action.payload(state),
   },
 });
 
-export const { setMessageList } = messageListSlice.actions;
+export const { setMessageList, updateMessageList } = messageListSlice.actions;
 export default messageListSlice.reducer;

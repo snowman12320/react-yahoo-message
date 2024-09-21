@@ -2,7 +2,9 @@ import { useDispatch } from 'react-redux';
 
 import { MessageListType } from '@/types';
 import { KEY_TOKEN, getFromStorage } from '@/api/storage-management';
-import { setMessageList } from '@/features/messageListSlice';
+import { setMessageList, updateMessageList } from '@/features/messageListSlice';
+// import { useMessageList } from '@/hooks';
+// import { RootState } from '@/app/store';
 
 interface inviteListType {
   context: string;
@@ -15,16 +17,24 @@ interface inviteListType {
 export function useWsFunc() {
   const dispatch = useDispatch();
   const fromToken = getFromStorage(KEY_TOKEN, 'SESSION');
+  // const { messageList } = useMessageList();
+  // const messageList = useSelector(
+  //   (state: RootState) => state.messageListReducer.messageList,
+  // );
 
   let host = '';
   let ws: WebSocket | null = null;
   let isWsInitialized = false;
+  // const isFirstRender = true; // 定義 isFirstRender 變數
 
   const initializeWebSocket = () => {
     if (isWsInitialized) return;
 
+    // if (window.location.protocol === 'http:') {
     host = `ws://localhost:3001/ws?token=${fromToken}`;
-    // host = `wss://one04social-back-end.onrender.com/ws?token=${token}`;
+    // } else if (window.location.protocol === 'https:') {
+    //   host = `wss://one04social-back-end.onrender.com/ws?token=${fromToken}`;
+    // }
 
     ws = new WebSocket(host);
     ws.onopen = () => {
@@ -46,6 +56,7 @@ export function useWsFunc() {
 
   const messageRef = null;
   let messageListHistory: MessageListType[] = [];
+  // console.info(messageListHistory); // [] 瘋狂重整 （載入 開啟 傳訊
 
   const inviteList: inviteListType[] = [];
 
@@ -60,16 +71,43 @@ export function useWsFunc() {
 
     ws.onmessage = res => {
       const msgData = JSON.parse(res.data);
+      // console.info('📩 message:', msgData);
 
       if (msgData.context === 'user') {
         uuid = msgData.uuid;
         name = msgData.name;
       }
 
-      if (msgData.context === 'message') {
-        messageListHistory = [...messageListHistory];
-        messageListHistory.push(msgData);
+      if (msgData.context === 'oldMessage') {
+        messageListHistory = [...messageListHistory, msgData];
         dispatch(setMessageList(messageListHistory));
+      }
+
+      // if (msgData.context === 'message') {
+      //   console.info('📩 message: 222', messageListHistory);
+      //   messageListHistory = [...messageListHistory];
+      //   messageListHistory.push(msgData);
+      //   dispatch(setMessageList(messageListHistory));
+      // }
+
+      // if (msgData.context === 'read') {
+      //   messageListHistory = [...msgData.newMessageListHistory];
+      //   console.info('📩 message: 111', messageListHistory);
+      //   const updatedMessageList = [...msgData.newMessageListHistory, msgData];
+      //   dispatch(setMessageList(updatedMessageList));
+      // }
+
+      if (msgData.context === 'read') {
+        // 將所有消息標記為已讀
+        dispatch(updateMessageList(prev => prev.map(msg => ({ ...msg, isRead: true }))));
+      }
+
+      if (msgData.context === 'message') {
+        // 添加新消息，只有新消息是未讀狀態
+        dispatch(updateMessageList(prev => [
+          ...prev,
+          { ...msgData, isRead: false },
+        ]));
       }
 
       if (msgData.context === 'invite') {
@@ -116,16 +154,6 @@ export function useWsFunc() {
     // scrollToBottom();
   };
 
-  // 待修
-  // 傳訊自動至底
-  // 六角講師的 https://github.com/ayugioh2003/demo-websocket-client/blob/main/src/views/ChatView.vue
-  // const scrollToBottom = async () => {
-  // console.warn(messageRef.scrollHeight);
-  // console.warn(messageRef.scrollTop);
-  // messageRef.scrollTop = messageRef.scrollHeight;
-  // console.warn(messageRef.scrollTop);
-  // };
-
   const invite = () => {
     // eslint-disable-next-line
     const to = prompt('請輸入要邀請的用戶 ID');
@@ -142,6 +170,38 @@ export function useWsFunc() {
     );
   };
 
+  const readMessage = ({
+    from,
+    toID,
+    newMessageListHistory,
+  }: {
+    from: string;
+    toID: string;
+    newMessageListHistory: Array<MessageListType>;
+  }) => {
+    if (!isWsInitialized) {
+      initializeWebSocket();
+    }
+
+    if (!ws) {
+      console.error('😅 WebSocket is not initialized.');
+      return;
+    }
+
+    // messageListHistory = newMessageListHistory;
+
+    ws.onopen = () => {
+      ws?.send(
+        JSON.stringify({
+          context: 'read',
+          from,
+          to: toID,
+          newMessageListHistory,
+        }),
+      );
+    };
+  };
+
   return {
     uuid,
     name,
@@ -152,5 +212,6 @@ export function useWsFunc() {
     onMounted,
     sendMessage,
     invite,
+    readMessage,
   };
 }

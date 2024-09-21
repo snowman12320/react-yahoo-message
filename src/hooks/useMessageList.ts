@@ -8,15 +8,17 @@ export function useMessageList() {
   const dispatch = useDispatch();
   const { onMounted } = useWsFunc();
   const messageList = useSelector(
-    (state: RootState) => state.messageListReducer.messageList,
+    // (state: RootState) => state.messageListReducer.messageList,
+    (state: RootState) => state.messageListReducer,
   );
 
   const fetchMessageList = async () => {
     await onMounted();
   };
 
-  const updateMessageList = async (messageListProp: MessageListType[]) => {
-    dispatch(setMessageList(messageListProp));
+  const updateMessageList = (newMessage: MessageListType[]) => {
+    // dispatch(setMessageList([...messageList, newMessage]));
+    dispatch(setMessageList(newMessage));
   };
 
   return { messageList, fetchMessageList, updateMessageList };
