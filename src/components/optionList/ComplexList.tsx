@@ -84,9 +84,15 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
               />
 
               {/* 未讀訊息 */}
-              {messageList.filter(message => message.uuid === friend._id && !message.isRead).length > 0 && (
+              {messageList.filter(
+                message => message.uuid === friend._id && !message.isRead,
+              ).length > 0 && (
                 <span className="absolute flex size-4 items-center justify-center rounded-full bg-red-500 text-center text-white">
-                  {messageList.filter(message => message.uuid === friend._id && !message.isRead).length}
+                  {
+                    messageList.filter(
+                      message => message.uuid === friend._id && !message.isRead,
+                    ).length
+                  }
                 </span>
               )}
             </section>

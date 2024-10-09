@@ -7,7 +7,7 @@ import { fetchFriendList as fetchFriendListApi } from '@/api';
 export function useFriendList() {
   const dispatch = useDispatch();
   const friendList = useSelector(
-    (state: RootState) => state.friendListReducer.friendList,
+    (state: RootState) => state.friendListReducer,
   );
 
   const fetchFriendList = async () => {

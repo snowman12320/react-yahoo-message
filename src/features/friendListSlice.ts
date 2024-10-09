@@ -1,20 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FriendListResponse } from '@/types';
 
-interface FriendListState {
-  friendList: FriendListResponse;
-}
-
-const initialState: FriendListState = {
-  friendList: [],
-};
-
 const friendListSlice = createSlice({
   name: 'friendList',
-  initialState,
+  initialState: [] as FriendListResponse,
   reducers: {
-    setFriendList(state, action: PayloadAction<FriendListResponse>) {
-      return { ...state, friendList: action.payload };
+    setFriendList(_state, action: PayloadAction<FriendListResponse>) {
+      return action.payload;
     },
   },
 });
