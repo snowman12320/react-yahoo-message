@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
-import { Mail, Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 
 import {
   AddFriendDialog,
@@ -67,7 +67,6 @@ export default function OptionList() {
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <AddFriendDialog />
-              <Mail className="size-6 cursor-pointer" />
               <Settings
                 className="size-6 cursor-pointer"
                 onClick={() => {
