@@ -8,13 +8,16 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { ChatRoom } from '@/components';
-import { useFriendList, useCurrentUser, useMessageList } from '@/hooks';
+import {
+  useFriendList, useCurrentUser, useMessageList, useInviteList,
+} from '@/hooks';
 import tempAvatar from '@/assets/images/user/defaultAvatar.png';
 
 export function ComplexList({ searchTerm }: { searchTerm: string }) {
   const { getStatusColor } = useCurrentUser();
   const { friendList, fetchFriendList } = useFriendList();
   const { fetchMessageList, messageList } = useMessageList();
+  const { inviteList } = useInviteList();
 
   useEffect(() => {
     fetchFriendList();
@@ -101,26 +104,28 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
       </AccordionItem>
 
       <AccordionItem value="item-2">
-        <AccordionTrigger>邀約列表（0）</AccordionTrigger>
+        <AccordionTrigger>{`邀約列表（${inviteList.length}）`}</AccordionTrigger>
         <AccordionContent>
-          <section className="flex flex-1 justify-between gap-6 p-3">
-            <img
-              src={tempAvatar}
-              alt="user avatar"
-              className="size-14 bg-slate-400 object-cover "
-            />
+          {inviteList.map(invite => (
+            <section key={invite.from} className="flex flex-1 justify-between gap-6 p-3">
+              <img
+                src={invite.photo || tempAvatar}
+                alt="user avatar"
+                className="size-14 bg-slate-400 object-cover "
+              />
 
-            <div className="flex w-full flex-col justify-start gap-3">
-              <div className="flex flex-1 items-center justify-start gap-3">
-                <span className="inline-block size-4 rounded-full bg-black " />
-                <p>好友名稱</p>
-              </div>
+              <div className="flex w-full flex-col justify-start gap-3">
+                <div className="flex flex-1 items-center justify-start gap-3">
+                  <span className="inline-block size-4 rounded-full bg-black " />
+                  <p>{invite.name}</p>
+                </div>
 
-              <div className="flex items-center justify-between gap-3">
-                <p className="waiting-invite">等待對方接受邀請</p>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="waiting-invite">等待對方接受邀請</p>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          ))}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

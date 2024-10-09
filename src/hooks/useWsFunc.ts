@@ -1,16 +1,9 @@
 import { useDispatch } from 'react-redux';
 
-import { MessageListType } from '@/types';
+import { MessageListType, inviteListType } from '@/types';
 import { KEY_TOKEN, getFromStorage } from '@/api/storage-management';
 import { setMessageList, updateMessageList } from '@/features/messageListSlice';
-
-interface inviteListType {
-  context: string;
-  from: string;
-  name: string;
-  photo: string;
-  createdAt: string;
-}
+import { updateInviteList } from '@/features/inviteListSlice';
 
 export function useWsFunc() {
   const dispatch = useDispatch();
@@ -76,24 +69,20 @@ export function useWsFunc() {
 
       if (msgData.context === 'read') {
         // 將所有消息標記為已讀
-        dispatch(updateMessageList(prev => prev.map(msg => ({ ...msg, isRead: true }))));
+        dispatch(
+          updateMessageList(prev => prev.map(msg => ({ ...msg, isRead: true }))),
+        );
       }
 
       if (msgData.context === 'message') {
         // 添加新消息，只有新消息是未讀狀態
-        dispatch(updateMessageList(prev => [
-          ...prev,
-          { ...msgData, isRead: false },
-        ]));
+        dispatch(
+          updateMessageList(prev => [...prev, { ...msgData, isRead: false }]),
+        );
       }
 
       if (msgData.context === 'invite') {
-        const index = inviteList.findIndex(
-          notification => notification.from === msgData.from,
-        );
-
-        if (index !== -1) inviteList.splice(index, 1);
-        else inviteList.push(msgData);
+        dispatch(updateInviteList(msgData));
       }
     };
   };
@@ -131,20 +120,26 @@ export function useWsFunc() {
     // scrollToBottom();
   };
 
-  const invite = () => {
-    // eslint-disable-next-line
-    const to = prompt('請輸入要邀請的用戶 ID');
+  const inviteFriend = (to: string, from: string, status: string) => {
+    if (!isWsInitialized) {
+      initializeWebSocket();
+    }
+
     if (!ws) {
       console.error('😅 WebSocket is not initialized.');
       return;
     }
 
-    ws.send(
-      JSON.stringify({
-        context: 'invite',
-        to,
-      }),
-    );
+    ws.onopen = () => {
+      ws?.send(
+        JSON.stringify({
+          context: 'invite',
+          to,
+          from,
+          status,
+        }),
+      );
+    };
   };
 
   const readMessage = ({
@@ -186,7 +181,7 @@ export function useWsFunc() {
 
     onMounted,
     sendMessage,
-    invite,
+    inviteFriend,
     readMessage,
   };
 }
