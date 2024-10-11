@@ -16,15 +16,16 @@ import {
   Label,
   toast,
 } from '@/components';
-import { useCurrentUser, useFriendList } from '@/hooks';
-import { addFriend } from '@/api';
+import { useCurrentUser, useWsFunc } from '@/hooks';
 
 export function AddFriendDialog() {
   const { getCurrentUser } = useCurrentUser();
-  const { fetchFriendList } = useFriendList();
+  // const { fetchFriendList } = useFriendList();
   const [isCopied, setIsCopied] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [inputCode, setInputCode] = useState('');
+  const { inviteFriend } = useWsFunc();
+  const currentUser = getCurrentUser();
 
   const copyCode = () => {
     const inviteCodeInput = document.getElementById(
@@ -46,22 +47,22 @@ export function AddFriendDialog() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsAdding(true);
-    let res = { status: '', message: '' };
 
-    try {
-      res = await addFriend(inputCode);
-      await fetchFriendList();
-    } catch (err) {
-      console.error('😅 addFriend: ', err);
-      res.message = (err as Error).message;
-    } finally {
-      setInputCode('');
+    if (inputCode === currentUser._id) {
       setIsAdding(false);
       toast({
-        description: res.message,
-        variant: res.status ? 'success' : 'error',
+        description: '不能加自己為好友',
+        variant: 'error',
       });
+      return;
     }
+
+    toast({
+      description: '邀請已發送',
+      variant: 'success',
+    });
+    inviteFriend(inputCode, currentUser._id, 'sendInvite');
+    setIsAdding(false);
   };
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -183,6 +184,7 @@ export function AddFriendDialog() {
             ) : (
               <Plus className="size-4" />
             )}
+            邀約
           </Button>
         </div>
       </DialogContent>

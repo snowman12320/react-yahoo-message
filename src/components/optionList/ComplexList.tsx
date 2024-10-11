@@ -12,12 +12,14 @@ import {
   useFriendList, useCurrentUser, useMessageList, useInviteList,
 } from '@/hooks';
 import tempAvatar from '@/assets/images/user/defaultAvatar.png';
+import { inviteListType } from '@/types';
 
 export function ComplexList({ searchTerm }: { searchTerm: string }) {
-  const { getStatusColor } = useCurrentUser();
+  const { getStatusColor, getCurrentUser } = useCurrentUser();
   const { friendList, fetchFriendList } = useFriendList();
   const { fetchMessageList, messageList } = useMessageList();
   const { inviteList } = useInviteList();
+  const currentUser = getCurrentUser();
 
   useEffect(() => {
     fetchFriendList();
@@ -29,12 +31,26 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
     [friendList, searchTerm],
   );
 
+  // try {
+  //   res = await addFriend(inputCode);
+  //   await fetchFriendList();
+  // } catch (err) {
+  //   console.error('😅 addFriend: ', err);
+  //   res.message = (err as Error).message;
+  // } finally {
+  //   setInputCode('');
+  //   setIsAdding(false);
+  //   toast({
+  //     description: res.message,
+  //     variant: res.status ? 'success' : 'error',
+  //   });
+  // }
+
   return (
     <Accordion
-      type="single"
-      collapsible
+      type="multiple"
       className="yahoo-btn-cls"
-      defaultValue="item-1"
+      defaultValue={['item-1', 'item-2']}
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>
@@ -106,22 +122,28 @@ export function ComplexList({ searchTerm }: { searchTerm: string }) {
       <AccordionItem value="item-2">
         <AccordionTrigger>{`邀約列表（${inviteList.length}）`}</AccordionTrigger>
         <AccordionContent>
-          {inviteList.map(invite => (
-            <section key={invite.from} className="flex flex-1 justify-between gap-6 p-3">
+          {inviteList.map((invite: inviteListType) => (
+            <section key={invite.id} className="flex flex-1 justify-between gap-6 p-3">
               <img
-                src={invite.photo || tempAvatar}
+                src={invite.to.photo || tempAvatar}
                 alt="user avatar"
                 className="size-14 bg-slate-400 object-cover "
               />
 
               <div className="flex w-full flex-col justify-start gap-3">
                 <div className="flex flex-1 items-center justify-start gap-3">
-                  <span className="inline-block size-4 rounded-full bg-black " />
-                  <p>{invite.name}</p>
+                  <p>{invite.to.name}</p>
                 </div>
 
-                <div className="flex items-center justify-between gap-3">
-                  <p className="waiting-invite">等待對方接受邀請</p>
+                <div>
+                  {invite.to._id === currentUser?._id ? (
+                    <div className="flex items-center justify-end gap-3">
+                      <span>拒絕</span>
+                      <span>接受</span>
+                    </div>
+                  ) : (
+                    <p className="waiting-invite">等待對方接受邀請</p>
+                  )}
                 </div>
               </div>
             </section>

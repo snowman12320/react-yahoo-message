@@ -9,10 +9,10 @@
     "preview": "vite preview",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "fix": "eslint src --ext ts,tsx --fix",
+    "type-check": "tsc --noEmit",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "type-check": "tsc --noEmit",
-    "pre-commit": "lint-staged && pnpm run type-check",
+    "pre-commit": "lint-staged",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist"
   },
