@@ -19,5 +19,5 @@ liff
     );
   })
   .catch(e => {
-    console.error(`😅 LIFF error: ${e.message}`);
+    console.error(`😅 LIFF init error: ${e.message}`);
   });
